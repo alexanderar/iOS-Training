@@ -3,29 +3,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class LTDeck;
-@class LTCard;
+@class LTCard, LTDeck;
 
 @interface LTCardMatchingGame : NSObject
 
-//designated initializer
-- (instancetype) initWithCardCount:(NSUInteger) count usingDeck:(LTDeck *) deck;
+- (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype) initWithCardCount:(NSUInteger) count
-                         usingDeck:(LTDeck *) deck
-    withAllowedNumberOfChosenCards:(NSUInteger) number;
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *) deck
+    NS_DESIGNATED_INITIALIZER;
 
-- (void) chooseCardAtIndex:(NSUInteger) index;
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck
+   withAllowedNumberOfChosenCards:(NSUInteger)number;
 
-- (LTCard *) cardAtIndex:(NSUInteger) index;
+- (LTCard *)cardAtIndex:(NSUInteger) index;
 
-@property (nonatomic, readonly) NSInteger score;
+- (void)chooseCardAtIndex:(NSUInteger) index;
+
 
 @property (nonatomic) NSUInteger allowedNumberOfChosenCards;
-
+@property (nonatomic, readonly) NSArray *lastConsiderationCards;
 @property (nonatomic, readonly) NSInteger lastConsiderationResult;
-
-@property (nonatomic, strong, readonly) NSArray *lastConsiderationCards;
+@property (readonly, nonatomic) NSInteger score;
 
 @end
 

@@ -3,17 +3,19 @@
 
 #import "LTDeck.h"
 #import "LTCard.h"
+NS_ASSUME_NONNULL_BEGIN
+
 @interface LTDeck()
 @property (strong, nonatomic) NSMutableArray *cards;
 @end
 
-
-
 @implementation LTDeck
 
-- (NSMutableArray *) cards{
-    if(!_cards) _cards = [[NSMutableArray alloc] init];
-    return _cards;
+-(instancetype)init{
+  if(self=[super init]) {
+    _cards =[[NSMutableArray alloc] init];
+  }
+  return self;
 }
 
 - (void)addCard:(LTCard *)card atTop:(BOOL)atTop{
@@ -26,7 +28,7 @@
     [self addCard:card atTop:NO];
 }
 
-- (LTCard *) drawRandomCard{
+- (LTCard *)drawRandomCard{
     LTCard *randomCard = nil;
     if([self.cards count]){
         unsigned index = arc4random() % [self.cards count];
@@ -36,9 +38,10 @@
     return randomCard;
 }
 
-- (BOOL) isEmpty{
+- (BOOL)isEmpty{
     return [self.cards count] == 0;
 }
 
 @end
 
+NS_ASSUME_NONNULL_END

@@ -7,20 +7,19 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTPlayingCardDeck
-- (instancetype) init{
-    self = [super init];
-    if (self)
-    {
-        for (NSString *suit in [LTPlayingCard validSuits]){
-            for (NSUInteger rank = 1; rank <= [LTPlayingCard maxRank]; rank++){
-                LTPlayingCard *card = [[LTPlayingCard alloc] init];
-                card.suit = suit;
-                card.rank = rank;
-                [self addCard:card];
-            }
-        }
+- (instancetype)init{
+  if (self = [super init])
+  {
+    for (NSString *suit in [LTPlayingCard validSuits]){
+      for (NSUInteger rank = 1; rank <= [LTPlayingCard maxRank]; rank++){
+        LTPlayingCard *card = [[LTPlayingCard alloc] init];
+        card.suit = suit;
+        card.rank = rank;
+        [self addCard:card];
+      }
     }
-    return self;
+  }
+  return self;
 }
 @end
 

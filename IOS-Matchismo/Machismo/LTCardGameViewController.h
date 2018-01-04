@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+NS_ASSUME_NONNULL_BEGIN
 @interface LTCardGameViewController : UIViewController
 
 - (IBAction)touchCardButton:(UIButton *) button;
 
 @end
+NS_ASSUME_NONNULL_END
 

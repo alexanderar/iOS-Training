@@ -102,14 +102,14 @@
 			children = (
 				3640BB1F1FFA33D7008D4892 /* LTCard.h */,
 				3640BB1E1FFA33D7008D4892 /* LTCard.mm */,
+				360680671FFB6C4C008F8E29 /* LTCardMatchingGame.h */,
+				360680661FFB6C4C008F8E29 /* LTCardMatchingGame.mm */,
 				3640BB241FFA348C008D4892 /* LTDeck.h */,
 				3640BB231FFA348C008D4892 /* LTDeck.mm */,
 				3640BB1D1FFA33D6008D4892 /* LTPlayingCard.h */,
 				3640BB201FFA33D7008D4892 /* LTPlayingCard.mm */,
 				367A91AB1FFA5ACA0077179B /* LTPlayingCardDeck.h */,
 				367A91AA1FFA5ACA0077179B /* LTPlayingCardDeck.mm */,
-				360680661FFB6C4C008F8E29 /* LTCardMatchingGame.mm */,
-				360680671FFB6C4C008F8E29 /* LTCardMatchingGame.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";

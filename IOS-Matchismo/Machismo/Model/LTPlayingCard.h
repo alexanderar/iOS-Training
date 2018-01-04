@@ -4,13 +4,14 @@
 
 #import "LTCard.h"
 
+NS_ASSUME_NONNULL_BEGIN
 @interface LTPlayingCard : LTCard
 
-@property (strong, nonatomic) NSString *suit;
++(NSUInteger)maxRank;
++(NSArray *)validSuits;
+
 @property (nonatomic) NSUInteger rank;
-+(NSUInteger) maxRank;
-+(NSArray *) validSuits;
+@property (strong, nonatomic) NSString *suit;
 
 @end
-
-
+NS_ASSUME_NONNULL_END
