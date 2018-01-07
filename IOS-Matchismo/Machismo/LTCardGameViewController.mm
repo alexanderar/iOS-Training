@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSString *)titleForCard:(LTCard *)card {
-  return card.isChosen ? card.contents : @"";
+  return card.isChosen ? card.contents.string : @"";
 }
 
 - (IBAction)touchCardButton:(UIButton *)button {

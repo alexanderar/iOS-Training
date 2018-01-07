@@ -33,9 +33,10 @@ static NSArray * _rankStrings = nil;
   return _validSuits;
 }
 
-- (NSString *)contents {
-  return [[LTPlayingCard rankStrings][self.rank] stringByAppendingString: self.suit];
-}
+- (NSAttributedString *)contents {
+  return [[NSAttributedString alloc] initWithString:[[LTPlayingCard rankStrings][self.rank]
+    stringByAppendingString: self.suit]];
+}	
 
 - (int)match:(NSArray *)otherCards {
   int score  = 0;
@@ -66,10 +67,6 @@ static NSArray * _rankStrings = nil;
 
 - (NSString *)suit {
   return _suit ? _suit : @"?";
-}
-
-- (NSString *) description {
-  return self.contents;
 }
 
 @end
