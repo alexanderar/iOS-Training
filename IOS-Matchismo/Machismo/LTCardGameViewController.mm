@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSMutableArray *chosenCardsContents = [[NSMutableArray alloc]
                                          initWithCapacity:[self.game.lastConsiderationCards count]];
   for(LTCard *card in self.game.lastConsiderationCards) {
-    [chosenCardsContents addObject:card.contents];
+    [chosenCardsContents addObject:card.contents.string];
   }
   
   NSString *chosenCardsText = [chosenCardsContents componentsJoinedByString:@" "];
