@@ -27,8 +27,7 @@ static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
 static const int DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS = 2;
 
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck
-{
+- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck {
   if (self = [super init]) {
     self.allowedNumberOfChosenCards = DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS;
     _cards = [[NSMutableArray alloc] init];
@@ -79,8 +78,7 @@ static const int DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS = 2;
     [chosenCards insertObject:touchedCard atIndex:0];
     NSUInteger numberOfOtherChosenCards = [chosenCards count];
     
-    if(numberOfOtherChosenCards == self.allowedNumberOfChosenCards)
-    {
+    if(numberOfOtherChosenCards == self.allowedNumberOfChosenCards) {
       int matchScore = [self matchCards: chosenCards];
       if(matchScore){
         scoreChange = matchScore * MATCH_BONUS;

@@ -7,8 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTCard
 
-- (int)match:(NSArray *)otherCards
-{
+- (int)match:(NSArray *)otherCards {
     int score = 0;
     for (LTCard *card in otherCards){
         if([card.contents isEqualToString:self.contents]) {
