@@ -1,12 +1,11 @@
 // Copyright (c) 2018 Lightricks. All rights reserved.
 // Created by Alex Artyomov.
 
-#import "LTCard.h"
+#import "LTCardGameViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation LTCard
-
+@interface LTPlayingCardGameViewController : LTCardGameViewController
 
 @end
 

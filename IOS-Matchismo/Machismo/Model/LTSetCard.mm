@@ -4,13 +4,6 @@
 #import "LTSetCard.h"
 #import "UIKit/UIKit.h"
 NS_ASSUME_NONNULL_BEGIN
-@interface LTSetCard()
-
-@property (nonatomic, strong) NSPredicate *shapeMatchPredicate;
-@property (nonatomic, strong) NSPredicate *shadeMatchPredicate;
-@property (nonatomic, strong) NSPredicate *numberMatchPredicate;
-@property (nonatomic, strong) NSPredicate *colorMatchPredicate;
-@end
 
 @implementation LTSetCard
 
@@ -42,19 +35,12 @@ static NSSet<UIColor *> *_validColors = nil;
     [stringContent appendString:self.shape];
   }
   NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-  attributes[NSForegroundColorAttributeName] = self.shade == LTSetCardShadeOpen ?
-      [UIColor whiteColor] : self.color;
-  attributes[NSStrokeWidthAttributeName] = @-3;
+  attributes[NSStrokeWidthAttributeName] = @-5;
   attributes[NSStrokeColorAttributeName] = self.color;
-  if(self.shade != LTSetCardShadeOpen) {
-    attributes[NSForegroundColorAttributeName] = [self.color colorWithAlphaComponent:
-                                                  (NSInteger)self.shade / 2];
-  } else {
-    attributes[NSForegroundColorAttributeName] = [UIColor whiteColor];
-  }
-  
+  attributes[NSForegroundColorAttributeName] =
+      [self.color colorWithAlphaComponent:(float)self.shade / 2];
   NSAttributedString *attrContent = [[NSAttributedString alloc] initWithString:stringContent
-                                                                    attributes:attributes];
+    attributes:attributes];
   return attrContent;
 }
 
@@ -73,49 +59,8 @@ static NSSet<UIColor *> *_validColors = nil;
   return _validColors;
 }
 
-- (int)match:(NSArray *)otherCards {
-   return [self matchCards:otherCards byPredicate:self.shapeMatchPredicate] &&
-     [self matchCards:otherCards byPredicate:self.shadeMatchPredicate] &&
-     [self matchCards:otherCards byPredicate:self.numberMatchPredicate] &&
-     [self matchCards:otherCards byPredicate:self.colorMatchPredicate] ? 1 :0;
-}
-
--(NSPredicate *)shapeMatchPredicate {
-  if(!_shapeMatchPredicate)
-  {
-    _shapeMatchPredicate = [NSPredicate predicateWithFormat:@"shape matches '%@'", self.shape];
-  }
-  return _shadeMatchPredicate;
-}
-
--(NSPredicate *)shadeMatchPredicate {
-  if(!_shadeMatchPredicate)
-  {
-    _shadeMatchPredicate = [NSPredicate predicateWithFormat:@"shade == %ld", (NSInteger)self.shade];
-  }
-  return  _shadeMatchPredicate;
-}
-
--(NSPredicate *)numberMatchPredicate {
-  if(!_numberMatchPredicate)
-  {
-    _numberMatchPredicate = [NSPredicate predicateWithFormat:@"number == %ld",
-        (NSInteger)self.number];
-  }
-  return  _numberMatchPredicate;
-}
-
--(NSPredicate *)colorMatchPredicate {
-  if(!_colorMatchPredicate)
-  {
-    _colorMatchPredicate = [NSPredicate predicateWithFormat:@"color == %@", self.color];
-  }
-  return  _shadeMatchPredicate;
-}
-    
-- (BOOL)matchCards:(NSArray *)cards byPredicate:(NSPredicate *) predicate{
-  NSArray *filteredArray = [cards filteredArrayUsingPredicate:predicate];
-  return filteredArray.count == 0 || filteredArray.count == cards.count;
++ (NSUInteger) maxNumber {
+  return 3;
 }
 
 @end

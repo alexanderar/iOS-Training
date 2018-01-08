@@ -14,6 +14,10 @@ typedef NS_ENUM(NSInteger, LTSetCardShade) {
   LTSetCardShadeSolid = 2
 };
 
++(NSUInteger)maxNumber;
++(NSSet<NSString *> *)validShapes;
++(NSSet<UIColor *> *)validColors;
+
 - (instancetype)init NS_UNAVAILABLE;
 
 - (instancetype)initWithShape:(NSString *)shape color:(UIColor *)color shade:(LTSetCardShade)shade

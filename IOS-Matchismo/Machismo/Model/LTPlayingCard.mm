@@ -38,19 +38,6 @@ static NSArray * _rankStrings = nil;
     stringByAppendingString: self.suit]];
 }	
 
-- (int)match:(NSArray *)otherCards {
-  int score  = 0;
-  for (LTPlayingCard *card in otherCards) {
-    if(card.rank == self.rank) {
-      score += 4;
-    }
-    if([card.suit isEqualToString:self.suit]) {
-      score += 1;
-    }
-  }
-  return score;
-}
-
 - (void)setRank:(NSUInteger)rank {
   if(rank <= [LTPlayingCard maxRank])
   {

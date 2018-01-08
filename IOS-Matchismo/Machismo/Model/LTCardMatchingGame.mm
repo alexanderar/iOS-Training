@@ -4,6 +4,7 @@
 #import "LTCardMatchingGame.h"
 #import "LTDeck.h"
 #import "LTCard.h"
+#import "LTGameIterationResult.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,10 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,strong) NSMutableArray* cards; //of LTCard
 
-// Contains result of last consideration triggered by choosing a card
-@property (nonatomic, readwrite) NSInteger lastConsiderationResult;
+@property (nonatomic) NSMutableArray<LTGameIterationResult *> *gameStateHistory;
 
-@property (nonatomic, strong, readwrite) NSArray *lastConsiderationCards;
+@property (readonly, nonatomic) NSUInteger cardCount;
 
 @end
 
@@ -25,33 +25,44 @@ NS_ASSUME_NONNULL_BEGIN
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
-static const int DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS = 2;
 
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck {
   if (self = [super init]) {
-    self.allowedNumberOfChosenCards = DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS;
-    _cards = [[NSMutableArray alloc] init];
-    _lastConsiderationCards = [[NSArray alloc] init];
-    for (int i = 0; i < count; i++) {
-      LTCard *card = [deck drawRandomCard];
-      if(card) {
-        [self.cards addObject:card];
-      } else {
-        self = nil;
-        break;
-      }
+    _cardCount = count;
+    if(![self resetGame]) {
+      return nil;
     }
   }
   return self;
 }
 
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck
-   withAllowedNumberOfChosenCards:(NSUInteger)number {
-  if (self = [self initWithCardCount:count usingDeck:deck]) {
-    self.allowedNumberOfChosenCards = number;
+- (BOOL)resetGame {
+  _cards = [[NSMutableArray alloc] init];
+  LTDeck *deck = [self createDeck];
+  for (int i = 0; i < self.cardCount; i++) {
+    LTCard *card = [deck drawRandomCard];
+    if(card) {
+      [self.cards addObject:card];
+    } else {
+      return NO;
+    }
   }
-  return self;
+  _gameStateHistory = [[NSMutableArray alloc] init];
+  return YES;
 }
+
+-(LTDeck *)createDeck {
+  return nil;
+}
+
+-(int)match:(NSArray<LTCard *> *)cards{
+  return 0;
+}
+
+-(NSArray<LTGameIterationResult *> *)history {
+  return self.gameStateHistory;
+}
+
 
 - (LTCard *)cardAtIndex:(NSUInteger)index {
   return index < [self.cards count] ? self.cards[index] : nil;
@@ -79,7 +90,7 @@ static const int DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS = 2;
     NSUInteger numberOfOtherChosenCards = [chosenCards count];
     
     if(numberOfOtherChosenCards == self.allowedNumberOfChosenCards) {
-      int matchScore = [self matchCards: chosenCards];
+      int matchScore = [self match: chosenCards];
       if(matchScore){
         scoreChange = matchScore * MATCH_BONUS;
         touchedCard.matched = YES;
@@ -96,22 +107,13 @@ static const int DEFAULT_ALLOWED_NUMBER_OF_CHOSEN_CARDS = 2;
     }
     self.score -= COST_TO_CHOOSE;
   }
-  [self updateLastConsiderationResult:scoreChange forCards:[chosenCards copy]];
+  [self updateHistory:scoreChange forCards:[chosenCards copy]];
 }
 
-- (int)matchCards:(NSMutableArray<LTCard *> *)chosenCards {
-  int matchScore = 0;
-  NSUInteger numberOfOtherChosenCards = [chosenCards count];
-  for (int i = 0; i < numberOfOtherChosenCards - 1; i++) {
-    NSRange range = NSMakeRange(i + 1, numberOfOtherChosenCards - 1 - i);
-    matchScore += [chosenCards[i] match: [chosenCards subarrayWithRange:range]];
-  }
-  return matchScore;
-}
 
-- (void)updateLastConsiderationResult:(NSInteger)result forCards:(NSArray *)cards {
-  self.lastConsiderationResult = result;
-  self.lastConsiderationCards = [cards copy];
+- (void)updateHistory:(NSInteger)result forCards:(NSArray *)cards {
+  [self.gameStateHistory addObject:[[LTGameIterationResult alloc]initWithCards:cards
+    withScore:result]];
 }
 
 @end

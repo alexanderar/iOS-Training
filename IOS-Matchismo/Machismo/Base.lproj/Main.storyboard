@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sqv-Sg-E7O">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,10 +10,28 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Card Game View Controller-->
+        <!--Tab Bar Controller-->
+        <scene sceneID="EHX-7k-Zef">
+            <objects>
+                <tabBarController id="sqv-Sg-E7O" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jks-2c-O6v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="tVW-rW-6Kf"/>
+                        <segue destination="5gH-1t-fce" kind="relationship" relationship="viewControllers" id="ikc-Ry-N59"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M5m-4G-IEU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-953" y="-587"/>
+        </scene>
+        <!--Item-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LTCardGameViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Playing Card Game" id="BYZ-38-t0r" customClass="LTPlayingCardGameViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -347,18 +365,6 @@
                                     <action selector="resetGame" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z6M-2b-sEA"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-i0-b3d">
-                                <rect key="frame" x="16" y="20" width="280" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <segments>
-                                    <segment title="2-card-match "/>
-                                    <segment title="3-card-match "/>
-                                </segments>
-                                <connections>
-                                    <action selector="gameModeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="s1E-rA-tYl"/>
-                                </connections>
-                            </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A50-yc-E4f">
                                 <rect key="frame" x="208" y="394" width="88" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -388,8 +394,9 @@
                         <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="TxE-hp-GqV"/>
+                    <navigationItem key="navigationItem" id="7fa-kX-1PR"/>
                     <connections>
-                        <outlet property="gameModeSwitch" destination="fcs-i0-b3d" id="5lm-29-kge"/>
                         <outlet property="lastConsiderationLabel" destination="JRb-cd-WWa" id="A8V-ZF-zDw"/>
                         <outlet property="scoreLabel" destination="A50-yc-E4f" id="bnn-wd-VQq"/>
                         <outletCollection property="cardButtons" destination="AlP-eN-1uN" id="9qd-2W-y9A"/>
@@ -426,11 +433,298 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="21.600000000000001" y="29.23538230884558"/>
+            <point key="canvasLocation" x="961" y="-920"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="oPm-aY-wl7">
+            <objects>
+                <viewController storyboardIdentifier="Set Card Game" id="5gH-1t-fce" customClass="LTSetCardGameViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xRI-X2-tIF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6d-hX-wAP">
+                                <rect key="frame" x="84" y="20" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="9Gz-qp-lrU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0b-4W-eH2">
+                                <rect key="frame" x="152" y="20" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="C2b-Pc-EzM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4EE-mh-q9r">
+                                <rect key="frame" x="220" y="20" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="i7u-gR-3Wh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqD-JF-WH7">
+                                <rect key="frame" x="16" y="88" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="qhc-P3-ucX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M1z-jR-JoG">
+                                <rect key="frame" x="84" y="88" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="cxD-OO-3cd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U78-Zi-nDD">
+                                <rect key="frame" x="154" y="88" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="urX-dm-oCt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nKx-Ct-zul">
+                                <rect key="frame" x="220" y="88" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="ZSd-1u-daU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pfm-qz-w4K">
+                                <rect key="frame" x="16" y="156" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="st1-J2-JcT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxX-tS-p6B">
+                                <rect key="frame" x="84" y="156" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="H4o-fJ-P7t"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6BR-Ey-Co7">
+                                <rect key="frame" x="152" y="156" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="DvG-Vz-igz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Qw-Ii-ouM">
+                                <rect key="frame" x="220" y="156" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="6dl-Kw-bFb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vau-y8-zFM">
+                                <rect key="frame" x="16" y="224" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="20Q-7m-yYg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rBg-nH-L08">
+                                <rect key="frame" x="84" y="224" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="xId-Jc-rDU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgr-HX-25r">
+                                <rect key="frame" x="152" y="224" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="7Bf-tV-33F"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GrV-PT-FIF">
+                                <rect key="frame" x="220" y="224" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="RFB-OP-8f9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTN-sx-6I3">
+                                <rect key="frame" x="16" y="292" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="3yu-rH-4iV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yD-Nd-IWE">
+                                <rect key="frame" x="84" y="292" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="qSX-HY-Seq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wzp-Dj-H7n">
+                                <rect key="frame" x="152" y="292" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="2hK-sB-Gnh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jux-iq-8Ne">
+                                <rect key="frame" x="220" y="292" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="znv-uV-TSz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jje-4Z-6Pg">
+                                <rect key="frame" x="16" y="362" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="bFe-Ud-m1z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="txo-WA-SsG">
+                                <rect key="frame" x="84" y="362" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="J3i-zF-Blc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPP-bu-cgy">
+                                <rect key="frame" x="152" y="362" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="uaj-7j-yEh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rqQ-6l-e2P">
+                                <rect key="frame" x="220" y="360" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="D6m-XE-7of"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NkI-4i-zXQ">
+                                <rect key="frame" x="16" y="20" width="62" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" backgroundImage="setCardCardfront"/>
+                                <connections>
+                                    <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="C1i-yt-c0c"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zwv-iq-hWV">
+                                <rect key="frame" x="16" y="432" width="54" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Reset" backgroundImage="cardfront">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetGame" destination="5gH-1t-fce" eventType="touchUpInside" id="mxT-5F-p63"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-zk-279">
+                                <rect key="frame" x="194" y="430" width="88" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSR-Ma-Q3P">
+                                <rect key="frame" x="16" y="469" width="266" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.82646571729908902" blue="0.78433579882525772" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <viewLayoutGuide key="safeArea" id="4aW-jm-KpU"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="9IV-BM-b1W"/>
+                    <connections>
+                        <outlet property="lastConsiderationLabel" destination="FSR-Ma-Q3P" id="96m-V5-cAm"/>
+                        <outlet property="scoreLabel" destination="5Hx-zk-279" id="iWw-Bb-L9w"/>
+                        <outletCollection property="cardButtons" destination="NkI-4i-zXQ" id="e5u-fc-rik"/>
+                        <outletCollection property="cardButtons" destination="X6d-hX-wAP" id="R4K-zp-NAr"/>
+                        <outletCollection property="cardButtons" destination="C0b-4W-eH2" id="l2x-kc-wtM"/>
+                        <outletCollection property="cardButtons" destination="4EE-mh-q9r" id="QG3-G7-onP"/>
+                        <outletCollection property="cardButtons" destination="KqD-JF-WH7" id="Q6d-3b-HE0"/>
+                        <outletCollection property="cardButtons" destination="M1z-jR-JoG" id="rfe-Xn-LAN"/>
+                        <outletCollection property="cardButtons" destination="U78-Zi-nDD" id="Ajy-Q6-gFU"/>
+                        <outletCollection property="cardButtons" destination="nKx-Ct-zul" id="C1h-rv-LOF"/>
+                        <outletCollection property="cardButtons" destination="Pfm-qz-w4K" id="Vqt-rG-Yzs"/>
+                        <outletCollection property="cardButtons" destination="dxX-tS-p6B" id="eOJ-Il-evC"/>
+                        <outletCollection property="cardButtons" destination="6BR-Ey-Co7" id="3FF-CT-LmT"/>
+                        <outletCollection property="cardButtons" destination="4Qw-Ii-ouM" id="ZPt-Ec-vyw"/>
+                        <outletCollection property="cardButtons" destination="Vau-y8-zFM" id="mjX-ir-7hS"/>
+                        <outletCollection property="cardButtons" destination="rBg-nH-L08" id="Ngf-Wd-ZHy"/>
+                        <outletCollection property="cardButtons" destination="cgr-HX-25r" id="U3Q-PA-oFK"/>
+                        <outletCollection property="cardButtons" destination="GrV-PT-FIF" id="LAm-hy-QUO"/>
+                        <outletCollection property="cardButtons" destination="RTN-sx-6I3" id="cP3-Dh-WSC"/>
+                        <outletCollection property="cardButtons" destination="4yD-Nd-IWE" id="A7i-4o-mM0"/>
+                        <outletCollection property="cardButtons" destination="Wzp-Dj-H7n" id="aJa-0R-KOA"/>
+                        <outletCollection property="cardButtons" destination="jux-iq-8Ne" id="FgE-Iu-ffI"/>
+                        <outletCollection property="cardButtons" destination="Jje-4Z-6Pg" id="goO-41-8F9"/>
+                        <outletCollection property="cardButtons" destination="txo-WA-SsG" id="eS8-TG-ckg"/>
+                        <outletCollection property="cardButtons" destination="aPP-bu-cgy" id="ps9-fE-zAV"/>
+                        <outletCollection property="cardButtons" destination="rqQ-6l-e2P" id="uSe-zi-sg0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xMM-DS-Ejo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="960.79999999999995" y="-187.55622188905548"/>
         </scene>
     </scenes>
     <resources>
         <image name="cardback" width="64" height="96"/>
         <image name="cardfront" width="64" height="96"/>
+        <image name="setCardCardfront" width="128" height="192"/>
     </resources>
 </document>

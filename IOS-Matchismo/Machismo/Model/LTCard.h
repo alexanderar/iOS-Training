@@ -5,8 +5,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCard : NSObject
 
-- (int)match:(NSArray *)otherCards;
-
 @property (strong, nonatomic) NSAttributedString *contents;
 @property (nonatomic, getter=isChosen) BOOL chosen;
 @property (nonatomic, getter=isMatched) BOOL matched;

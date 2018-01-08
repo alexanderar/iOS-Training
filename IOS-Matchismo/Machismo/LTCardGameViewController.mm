@@ -10,14 +10,13 @@
 #import "LTCardGameViewController.h"
 #import "LTCardMatchingGame.h"
 #import "LTDeck.h"
-#import "LTPlayingCardDeck.h"
+#import "LTGameIterationResult.h"
+
 NS_ASSUME_NONNULL_BEGIN
 @interface LTCardGameViewController ()
 
-@property (nonatomic, readonly) NSUInteger allowedNumberOfCheckedCards;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray<UIButton *> *cardButtons;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) LTCardMatchingGame *game;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *lastConsiderationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
@@ -25,61 +24,54 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTCardGameViewController
 
-- (NSUInteger)allowedNumberOfCheckedCards{
-  return self.gameModeSwitch.selectedSegmentIndex + 2;
-}
-
+//abstract
 - (UIImage *)backgroundImageForCard:(LTCard *)card {
-  return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
+  return nil;
 }
 
-- (LTDeck *)createDeck {
-  return [[LTPlayingCardDeck alloc] init];
-}
-
-- (IBAction)gameModeChanged {
-  self.game.allowedNumberOfChosenCards = self.allowedNumberOfCheckedCards;
-  [self resetGame];
-}
-
-- (void)initGame {
-  _game = [[LTCardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-                                              usingDeck:[self createDeck]
-                         withAllowedNumberOfChosenCards:self.allowedNumberOfCheckedCards];
+//abstract
+- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
+  return nil;
 }
 
 - (IBAction)resetGame {
-  [self initGame];
+  self.game = [self createGameWithCardCount: self.cardButtons.count];
   [self updateUI];
-  self.gameModeSwitch.enabled = YES;
 }
 
 - (void)setLastConsiderationLabelText {
-  NSMutableArray *chosenCardsContents = [[NSMutableArray alloc]
-                                         initWithCapacity:[self.game.lastConsiderationCards count]];
-  for(LTCard *card in self.game.lastConsiderationCards) {
-    [chosenCardsContents addObject:card.contents.string];
-  }
-  
-  NSString *chosenCardsText = [chosenCardsContents componentsJoinedByString:@" "];
-  
-  if(self.game.lastConsiderationResult == 0) {
-    self.lastConsiderationLabel.text = chosenCardsText;
+  LTGameIterationResult *lastResult = [self.game.history lastObject];
+  if(!lastResult) {
+    self.lastConsiderationLabel.attributedText = [[NSAttributedString alloc]initWithString:@""];
     return;
   }
-  if(self.game.lastConsiderationResult > 0) {
-    self.lastConsiderationLabel.text =
-    [NSString stringWithFormat:@"Matched %@ for %ld points", chosenCardsText,
-     self.game.lastConsiderationResult];
-  } else {
-    self.lastConsiderationLabel.text =
-    [NSString stringWithFormat:@"%@ don't match! %ld point penalty", chosenCardsText,
-     -self.game.lastConsiderationResult];
+  NSMutableAttributedString *chosenCardsText = [[NSMutableAttributedString alloc] init];
+  for(LTCard *card in lastResult.cards) {
+    [chosenCardsText appendAttributedString:card.contents];
+    [chosenCardsText appendAttributedString:[[NSMutableAttributedString alloc]initWithString:@" "]];
   }
+  if(lastResult.score == 0) {
+    self.lastConsiderationLabel.attributedText = chosenCardsText;
+    return;
+  }
+  NSMutableAttributedString *labelText;
+  if(lastResult.score > 0) {
+    labelText = [[NSMutableAttributedString alloc] initWithString: @"Matched "];
+    [labelText appendAttributedString:chosenCardsText];
+    [labelText appendAttributedString:[[NSAttributedString alloc] initWithString:
+        [NSString stringWithFormat:@"for %ld points", lastResult.score]]];
+  } else {
+    labelText = [[NSMutableAttributedString alloc] initWithAttributedString:chosenCardsText];
+    [labelText appendAttributedString:[[NSAttributedString alloc] initWithString:
+      [NSString stringWithFormat:@"don't match! %ld point penalty",
+       lastResult.score]]];
+  }
+  self.lastConsiderationLabel.attributedText = labelText;
 }
 
-- (NSString *)titleForCard:(LTCard *)card {
-  return card.isChosen ? card.contents.string : @"";
+//abstract
+- (NSAttributedString *)titleForCard:(LTCard *)card {
+  return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)button {
@@ -92,7 +84,8 @@ NS_ASSUME_NONNULL_BEGIN
   for (UIButton *cardButton in self.cardButtons) {
     NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
     LTCard *card = [self.game cardAtIndex:cardButtonIndex];
-    [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+    [cardButton setAttributedTitle:[self titleForCard:card]
+      forState:UIControlStateNormal];
     [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                           forState:UIControlStateNormal];
     cardButton.enabled = !card.isMatched;
@@ -101,9 +94,9 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  [self initGame];
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self resetGame];
 }
 
 @end
