@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
   return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
 }
 - (NSAttributedString *)titleForCard:(LTCard *)card {
-  return card.isChosen ? card.contents : [[NSAttributedString alloc]initWithString:@""];
+  return [[NSAttributedString alloc]initWithString:card.isChosen ? card.contents :@""];
 }
 
 -(LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {

@@ -33,9 +33,8 @@ static NSArray * _rankStrings = nil;
   return _validSuits;
 }
 
-- (NSAttributedString *)contents {
-  return [[NSAttributedString alloc] initWithString:[[LTPlayingCard rankStrings][self.rank]
-    stringByAppendingString: self.suit]];
+- (NSString *)contents {
+  return [[LTPlayingCard rankStrings][self.rank] stringByAppendingString: self.suit];
 }	
 
 - (void)setRank:(NSUInteger)rank {

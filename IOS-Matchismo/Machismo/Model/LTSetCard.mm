@@ -11,15 +11,15 @@ static NSSet<NSString *> *_validShapes = nil;
 static NSSet<UIColor *> *_validColors = nil;
 
 
-- (instancetype)initWithShape:(NSString *)shape color:(UIColor *)color shade:(LTSetCardShade)shade
+- (instancetype)initWithShape:(NSString *)shape color:(NSString *)colorHexString shade:(LTSetCardShade)shade
       number:(NSUInteger) number {
   if(self=[super init])
   {
     if([[LTSetCard validShapes] containsObject:shape] &&
-       [[LTSetCard validColors] containsObject:color] &&
+       [[LTSetCard validColors] containsObject:colorHexString] &&
        number >=1  && number <= 3) {
       _shape = shape;
-      _color = color;
+      _colorHexString = colorHexString;
       _number = number;
       _shade = shade;
     } else {
@@ -29,19 +29,8 @@ static NSSet<UIColor *> *_validColors = nil;
   return self;
 }
 
-- (NSAttributedString *)contents {
-  NSMutableString *stringContent = [[NSMutableString alloc] initWithCapacity:self.number];
-  for (int i =0; i<self.number; i++) {
-    [stringContent appendString:self.shape];
-  }
-  NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-  attributes[NSStrokeWidthAttributeName] = @-5;
-  attributes[NSStrokeColorAttributeName] = self.color;
-  attributes[NSForegroundColorAttributeName] =
-  [self.color colorWithAlphaComponent:(float)self.shade / 2];
-  NSAttributedString *attrContent = [[NSAttributedString alloc] initWithString:stringContent
-                                                                    attributes:attributes];
-  return attrContent;
+- (NSString *)contents {
+  return nil;
 }
 
 + (NSSet<NSString *> *)validShapes {
@@ -53,8 +42,7 @@ static NSSet<UIColor *> *_validColors = nil;
 
 + (NSSet<UIColor *> *)validColors {
   if(!_validColors) {
-    _validColors = [[NSSet alloc] initWithArray: @[[UIColor redColor], [UIColor greenColor],
-                                                   [UIColor purpleColor]]];
+    _validColors = [[NSSet alloc] initWithArray: @[@"#FF0000", @"#00FF00", @"#0000FF"]];
   }
   return _validColors;
 }

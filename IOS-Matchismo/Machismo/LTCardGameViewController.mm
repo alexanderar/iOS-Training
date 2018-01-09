@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
   NSMutableAttributedString *chosenCardsText = [[NSMutableAttributedString alloc] init];
   for(LTCard *card in lastResult.cards) {
-    [chosenCardsText appendAttributedString:card.contents];
+    [chosenCardsText appendAttributedString:[self titleForCard:card]];
     [chosenCardsText appendAttributedString:[[NSMutableAttributedString alloc]initWithString:@" "]];
   }
   if(lastResult.score == 0) {

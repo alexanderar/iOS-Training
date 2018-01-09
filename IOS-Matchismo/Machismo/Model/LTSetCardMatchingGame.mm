@@ -42,8 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
     colorMatches[color] = @0;
   }
   for (LTSetCard *card in cards) {
-    int currentValue = (int)[colorMatches[card.color] integerValue];
-    colorMatches[card.color] =  [NSNumber numberWithInt:(currentValue + 1)];
+    int currentValue = (int)[colorMatches[card.colorHexString] integerValue];
+    colorMatches[card.colorHexString] =  [NSNumber numberWithInt:(currentValue + 1)];
   }
   return [LTSetCardMatchingGame validateMatchOnDictionary:colorMatches];
 }

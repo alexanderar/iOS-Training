@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LTCard : NSObject
 
 ///Card content.
-@property (strong, nonatomic) NSAttributedString *contents;
+@property (strong, nonatomic) NSString *contents;
 
 ///Property that indicates whether the card is chosen or not.
 @property (nonatomic, getter=isChosen) BOOL chosen;
