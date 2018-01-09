@@ -12,7 +12,7 @@ static NSSet<UIColor *> *_validColors = nil;
 
 
 - (instancetype)initWithShape:(NSString *)shape color:(UIColor *)color shade:(LTSetCardShade)shade
-    number:(NSUInteger) number {
+      number:(NSUInteger) number {
   if(self=[super init])
   {
     if([[LTSetCard validShapes] containsObject:shape] &&
@@ -38,9 +38,9 @@ static NSSet<UIColor *> *_validColors = nil;
   attributes[NSStrokeWidthAttributeName] = @-5;
   attributes[NSStrokeColorAttributeName] = self.color;
   attributes[NSForegroundColorAttributeName] =
-      [self.color colorWithAlphaComponent:(float)self.shade / 2];
+  [self.color colorWithAlphaComponent:(float)self.shade / 2];
   NSAttributedString *attrContent = [[NSAttributedString alloc] initWithString:stringContent
-    attributes:attributes];
+                                                                    attributes:attributes];
   return attrContent;
 }
 
@@ -54,7 +54,7 @@ static NSSet<UIColor *> *_validColors = nil;
 + (NSSet<UIColor *> *)validColors {
   if(!_validColors) {
     _validColors = [[NSSet alloc] initWithArray: @[[UIColor redColor], [UIColor greenColor],
-       [UIColor purpleColor]]];
+                                                   [UIColor purpleColor]]];
   }
   return _validColors;
 }

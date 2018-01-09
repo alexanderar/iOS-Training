@@ -7,6 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTPlayingCardDeck
+
 - (instancetype)init {
   if (self = [super init]) {
     for (NSString *suit in [LTPlayingCard validSuits]) {
@@ -20,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
   return self;
 }
+
 @end
 
 

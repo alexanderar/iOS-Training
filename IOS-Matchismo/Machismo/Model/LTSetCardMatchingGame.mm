@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)colorMatch:(NSArray *)cards {
-  NSMutableDictionary<UIColor*, NSNumber*> *colorMatches = [[NSMutableDictionary alloc]init];
+  auto *colorMatches = [[NSMutableDictionary alloc]init];
   for (UIColor *color in  LTSetCard.validColors) {
     colorMatches[color] = @0;
   }
@@ -49,12 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)shadeMatch:(NSArray *)cards {
-  NSMutableDictionary<NSNumber*, NSNumber*> *shadeMatches =
-      [[NSMutableDictionary alloc]initWithDictionary: @{
-          [NSNumber numberWithInt:LTSetCardShadeOpen]:@0,
-          [NSNumber numberWithInt:LTSetCardShadeStriped]:@0,
-          [NSNumber numberWithInt:LTSetCardShadeSolid]:@0
-      }];
+  auto *shadeMatches =
+  [[NSMutableDictionary alloc]initWithDictionary: @{
+      [NSNumber numberWithInt:LTSetCardShadeOpen]:@0,
+      [NSNumber numberWithInt:LTSetCardShadeStriped]:@0,
+      [NSNumber numberWithInt:LTSetCardShadeSolid]:@0
+  }];
   for (LTSetCard *card in cards) {
     int currentValue = (int)[shadeMatches[@((int)card.shade)] integerValue];
     shadeMatches[@((int)card.shade)] =  [NSNumber numberWithInt:(currentValue + 1)];
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)shapeMatch:(NSArray *)cards {
-  NSMutableDictionary<NSString*, NSNumber*> *shapeMatches = [[NSMutableDictionary alloc]init];
+  auto *shapeMatches = [[NSMutableDictionary alloc]init];
   for (NSString *shape in  LTSetCard.validShapes) {
     shapeMatches[shape] = @0;
   }
@@ -75,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)numberMatch:(NSArray *)cards {
-  NSMutableDictionary<NSNumber*, NSNumber*> *numberMatches = [[NSMutableDictionary alloc]init];
+  auto *numberMatches = [[NSMutableDictionary alloc]init];
   for (int i = 1; i<=LTSetCard.maxNumber; i++) {
     numberMatches[@(i)] = @0;
   }

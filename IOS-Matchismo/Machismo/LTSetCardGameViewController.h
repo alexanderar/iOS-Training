@@ -4,6 +4,7 @@
 #import "LTCardGameViewController.h"
 NS_ASSUME_NONNULL_BEGIN
 
+///Set card game view controller.
 @interface LTSetCardGameViewController : LTCardGameViewController
 
 @end

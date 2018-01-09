@@ -15,9 +15,16 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface LTCardGameViewController ()
 
+///Collection of all cards displayed on the screen
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+
+///Game model
 @property (strong, nonatomic) LTCardMatchingGame *game;
+
+///Label that displays a last consideration result.
 @property (weak, nonatomic) IBOutlet UILabel *lastConsiderationLabel;
+
+///Label the shows a score.
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 
 @end

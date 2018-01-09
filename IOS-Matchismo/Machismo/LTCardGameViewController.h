@@ -11,16 +11,25 @@
 #import "LTCardMatchingGame.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+///Object that represnts a base card game view controller. Any particular card game view controller
+///should derive from it.
 @interface LTCardGameViewController : UIViewController
 
-- (IBAction)touchCardButton:(UIButton *) button;
+///Returns a background image for a \c card.
+///Abstract.
+- (UIImage *)backgroundImageForCard:(LTCard *)card;
 
+///Creates a new game with number of cards specified by \c count.
 // abstract
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count;
-// abstract
+
+///Returns a title for a \c card.
+///Abstract.
 - (NSAttributedString *)titleForCard:(LTCard *)card;
-// abstract
-- (UIImage *)backgroundImageForCard:(LTCard *)card;
+
+///Target action that is triggered when user tuches a card.
+- (IBAction)touchCardButton:(UIButton *) button;
 
 @end
 NS_ASSUME_NONNULL_END

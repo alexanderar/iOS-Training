@@ -6,13 +6,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTGameIterationResult
--(instancetype)initWithCards:(NSArray *)cards withScore:(NSInteger)score {
+
+- (instancetype)initWithCards:(NSArray *)cards withScore:(NSInteger)score {
   if(self = [super init]) {
     _cards = cards;
     _score = score;
   }
   return self;
 }
+
 @end
 
 NS_ASSUME_NONNULL_END

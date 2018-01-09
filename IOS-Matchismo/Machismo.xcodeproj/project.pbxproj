@@ -133,6 +133,8 @@
 				3640BB231FFA348C008D4892 /* LTDeck.mm */,
 				361C19E720038DEC00CA87AF /* LTGameIterationResult.h */,
 				361C19E620038DEC00CA87AF /* LTGameIterationResult.mm */,
+				36D606712003A63E00F910C6 /* LTPlayCardMatchingGame.h */,
+				36D606702003A63E00F910C6 /* LTPlayCardMatchingGame.mm */,
 				3640BB1D1FFA33D6008D4892 /* LTPlayingCard.h */,
 				3640BB201FFA33D7008D4892 /* LTPlayingCard.mm */,
 				367A91AB1FFA5ACA0077179B /* LTPlayingCardDeck.h */,
@@ -141,10 +143,8 @@
 				361C19D5200222C600CA87AF /* LTSetCard.mm */,
 				361C19D920025CD200CA87AF /* LTSetCardDeck.h */,
 				361C19D820025CD200CA87AF /* LTSetCardDeck.mm */,
-				36D6066D2003A61000F910C6 /* LTSetCardMatchingGame.mm */,
 				36D6066E2003A61000F910C6 /* LTSetCardMatchingGame.h */,
-				36D606702003A63E00F910C6 /* LTPlayCardMatchingGame.mm */,
-				36D606712003A63E00F910C6 /* LTPlayCardMatchingGame.h */,
+				36D6066D2003A61000F910C6 /* LTSetCardMatchingGame.mm */,
 			);
 			path = Model;
 			sourceTree = "<group>";

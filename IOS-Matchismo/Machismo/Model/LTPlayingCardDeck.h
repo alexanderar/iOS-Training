@@ -5,6 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+///Deck of playing cards that is used in playing card maching game.
 @interface LTPlayingCardDeck : LTDeck
 
 @end
