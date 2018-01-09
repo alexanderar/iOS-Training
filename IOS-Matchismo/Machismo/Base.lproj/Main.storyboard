@@ -29,7 +29,7 @@
             </objects>
             <point key="canvasLocation" x="-535" y="-583"/>
         </scene>
-        <!--Matchismo Game-->
+        <!--Score: 0-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="Playing Card Game" id="BYZ-38-t0r" customClass="LTPlayingCardGameViewController" sceneMemberID="viewController">
@@ -366,13 +366,6 @@
                                     <action selector="resetGame" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z6M-2b-sEA"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A50-yc-E4f">
-                                <rect key="frame" x="208" y="414" width="88" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRb-cd-WWa">
                                 <rect key="frame" x="16" y="454" width="280" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -395,7 +388,7 @@
                         <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Matchismo Game" id="7fa-kX-1PR">
+                    <navigationItem key="navigationItem" title="Score: 0" id="7fa-kX-1PR">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Vje-du-Fh8"/>
                         <barButtonItem key="rightBarButtonItem" title="History" id="Yip-KX-aQe">
                             <connections>
@@ -405,7 +398,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="lastConsiderationLabel" destination="JRb-cd-WWa" id="A8V-ZF-zDw"/>
-                        <outlet property="scoreLabel" destination="A50-yc-E4f" id="bnn-wd-VQq"/>
                         <outletCollection property="cardButtons" destination="AlP-eN-1uN" id="9qd-2W-y9A"/>
                         <outletCollection property="cardButtons" destination="RK2-i1-CeC" id="4dc-kq-Reg"/>
                         <outletCollection property="cardButtons" destination="77y-yZ-8aU" id="4Ud-IH-Bj5"/>
@@ -442,7 +434,7 @@
             </objects>
             <point key="canvasLocation" x="1516" y="-1012"/>
         </scene>
-        <!--Set Game-->
+        <!--Score: 0-->
         <scene sceneID="oPm-aY-wl7">
             <objects>
                 <viewController storyboardIdentifier="Set Card Game" id="5gH-1t-fce" customClass="LTSetCardGameViewController" sceneMemberID="viewController">
@@ -693,25 +685,8 @@
                                     <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="C1i-yt-c0c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zwv-iq-hWV">
-                                <rect key="frame" x="16" y="426" width="54" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Reset" backgroundImage="cardfront">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="resetGame" destination="5gH-1t-fce" eventType="touchUpInside" id="mxT-5F-p63"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Hx-zk-279">
-                                <rect key="frame" x="194" y="424" width="88" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSR-Ma-Q3P">
-                                <rect key="frame" x="16" y="463" width="266" height="26"/>
+                                <rect key="frame" x="16" y="412" width="266" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="textColor"/>
@@ -726,11 +701,21 @@
                                     <action selector="touchCardButton:" destination="5gH-1t-fce" eventType="touchUpInside" id="MbL-95-pV5"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zwv-iq-hWV">
+                                <rect key="frame" x="16" y="446" width="54" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Reset" backgroundImage="cardfront">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetGame" destination="5gH-1t-fce" eventType="touchUpInside" id="mxT-5F-p63"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.82646571729908902" blue="0.78433579882525772" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="4aW-jm-KpU"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Set Game" id="H4E-k8-NFC">
+                    <navigationItem key="navigationItem" title="Score: 0" id="H4E-k8-NFC">
                         <barButtonItem key="backBarButtonItem" title="Back" id="VRx-iZ-b4Y"/>
                         <barButtonItem key="rightBarButtonItem" title="History" id="byb-Rs-eNH">
                             <connections>
@@ -740,7 +725,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="lastConsiderationLabel" destination="FSR-Ma-Q3P" id="96m-V5-cAm"/>
-                        <outlet property="scoreLabel" destination="5Hx-zk-279" id="iWw-Bb-L9w"/>
                         <outletCollection property="cardButtons" destination="NkI-4i-zXQ" id="e5u-fc-rik"/>
                         <outletCollection property="cardButtons" destination="X6d-hX-wAP" id="R4K-zp-NAr"/>
                         <outletCollection property="cardButtons" destination="C0b-4W-eH2" id="l2x-kc-wtM"/>
@@ -848,6 +832,6 @@
         <image name="setCardCardfront" width="128" height="192"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="B2W-bs-SAd"/>
+        <segue reference="AK0-ON-pzj"/>
     </inferredMetricsTieBreakers>
 </document>

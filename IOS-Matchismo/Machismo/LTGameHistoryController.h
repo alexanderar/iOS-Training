@@ -8,9 +8,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///View controller that displays game history
 @interface LTGameHistoryController : UIViewController
 
-///Game history
+///Game history represented as a collection of text messages
 @property(nonatomic) NSArray<NSAttributedString *> *history;
 
+///History text view
 @property (weak, nonatomic) IBOutlet UITextView *historyView;
 
 @end

@@ -25,9 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///Label that displays a last consideration result.
 @property (weak, nonatomic) IBOutlet UILabel *lastConsiderationLabel;
 
-///Label the shows a score.
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-
 @end
 
 @implementation LTCardGameViewController
@@ -119,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
     [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                           forState:UIControlStateNormal];
     cardButton.enabled = !card.isMatched;
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+    self.title = [NSString stringWithFormat:@"Score: %ld", self.game.score];
   }
   [self setLastConsiderationLabelText];
 }

@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation LTGameHistoryController
 
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   NSAttributedString *joinElement = [[NSAttributedString alloc] initWithString:@"\n\n"];
   NSMutableAttributedString *historyText = [[NSMutableAttributedString alloc] init];
