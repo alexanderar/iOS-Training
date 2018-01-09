@@ -6,7 +6,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTDeck()
+
+///Property that holds all the cards in the deck.
 @property (strong, nonatomic) NSMutableArray *cards;
+
 @end
 
 @implementation LTDeck

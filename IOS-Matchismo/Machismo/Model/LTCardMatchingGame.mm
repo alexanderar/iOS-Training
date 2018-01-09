@@ -10,13 +10,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCardMatchingGame()
 
-@property (nonatomic, readwrite) NSInteger score;
+///Number of cards that are used in current game.
+@property (readonly, nonatomic) NSUInteger cardCount;
 
-@property (nonatomic,strong) NSMutableArray* cards; //of LTCard
+///Array of cards that are used in current game.
+@property (nonatomic,strong) NSMutableArray<LTCard *> *cards;
 
+///Backing property for public readonly history property.
 @property (nonatomic) NSMutableArray<LTGameIterationResult *> *gameStateHistory;
 
-@property (readonly, nonatomic) NSUInteger cardCount;
+///Backing property for the public readonly score property.
+@property (nonatomic, readwrite) NSInteger score;
 
 @end
 
@@ -70,7 +74,7 @@ static const int COST_TO_CHOOSE = 1;
 
 - (void)chooseCardAtIndex:(NSUInteger)index {
   LTCard *touchedCard = [self cardAtIndex:index];
-  NSMutableArray* chosenCards = [[NSMutableArray alloc] init];
+  auto chosenCards = [[NSMutableArray alloc] init];
   int scoreChange = 0;
   if(touchedCard.isMatched) {
     return;
