@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSAttributedString *)titleForCard:(LTCard *)card {
+  return [self cardContent:card];
+}
+
+//Abstract
+- (NSAttributedString *)cardContent:(LTCard *)card {
   if([card isKindOfClass:[LTSetCard class]])
   {
     LTSetCard *setCard = (LTSetCard*) card;

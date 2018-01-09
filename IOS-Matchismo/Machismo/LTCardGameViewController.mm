@@ -11,6 +11,7 @@
 #import "LTCardMatchingGame.h"
 #import "LTDeck.h"
 #import "LTGameIterationResult.h"
+#import "LTGameHistoryController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @interface LTCardGameViewController ()
@@ -46,38 +47,60 @@ NS_ASSUME_NONNULL_BEGIN
   [self updateUI];
 }
 
-- (void)setLastConsiderationLabelText {
-  LTGameIterationResult *lastResult = [self.game.history lastObject];
-  if(!lastResult) {
-    self.lastConsiderationLabel.attributedText = [[NSAttributedString alloc]initWithString:@""];
-    return;
+- (NSAttributedString *) createGameStatusTextFor:(LTGameIterationResult *)iterationResult {
+  if(!iterationResult) {
+    return [[NSAttributedString alloc]initWithString:@""];
   }
   NSMutableAttributedString *chosenCardsText = [[NSMutableAttributedString alloc] init];
-  for(LTCard *card in lastResult.cards) {
-    [chosenCardsText appendAttributedString:[self titleForCard:card]];
+  for(LTCard *card in iterationResult.cards) {
+    [chosenCardsText appendAttributedString:[self cardContent:card]];
     [chosenCardsText appendAttributedString:[[NSMutableAttributedString alloc]initWithString:@" "]];
   }
-  if(lastResult.score == 0) {
-    self.lastConsiderationLabel.attributedText = chosenCardsText;
-    return;
+  if(iterationResult.score == 0) {
+    return chosenCardsText;
   }
-  NSMutableAttributedString *labelText;
-  if(lastResult.score > 0) {
-    labelText = [[NSMutableAttributedString alloc] initWithString: @"Matched "];
-    [labelText appendAttributedString:chosenCardsText];
-    [labelText appendAttributedString:[[NSAttributedString alloc] initWithString:
-        [NSString stringWithFormat:@"for %ld points", lastResult.score]]];
+  NSMutableAttributedString *text;
+  if(iterationResult.score > 0) {
+    text = [[NSMutableAttributedString alloc] initWithString: @"Matched "];
+    [text appendAttributedString:chosenCardsText];
+    [text appendAttributedString:[[NSAttributedString alloc] initWithString:
+        [NSString stringWithFormat:@"for %ld points", iterationResult.score]]];
   } else {
-    labelText = [[NSMutableAttributedString alloc] initWithAttributedString:chosenCardsText];
-    [labelText appendAttributedString:[[NSAttributedString alloc] initWithString:
-      [NSString stringWithFormat:@"don't match! %ld point penalty",
-       lastResult.score]]];
+    text = [[NSMutableAttributedString alloc] initWithAttributedString:chosenCardsText];
+    [text appendAttributedString:[[NSAttributedString alloc] initWithString:
+        [NSString stringWithFormat:@"don't match! %ld point penalty", iterationResult.score]]];
   }
-  self.lastConsiderationLabel.attributedText = labelText;
+  return text;
 }
 
-//abstract
+- (void)setLastConsiderationLabelText {
+  self.lastConsiderationLabel.attributedText = [self createGameStatusTextFor:
+      [self.game.history lastObject]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(nullable id)sender {
+  if([segue.identifier isEqualToString:@"ShowHistory"]) {
+    if([segue.destinationViewController isKindOfClass:[LTGameHistoryController class]]) {
+      auto historyController = (LTGameHistoryController *)segue.destinationViewController;
+      NSMutableArray *gameHistory = [[NSMutableArray alloc]init];
+      for (int i = 0; i < self.game.history.count; i++) {
+        LTGameIterationResult *result = self.game.history[i];
+        if(result && result.score != 0) {
+          [gameHistory addObject:[self createGameStatusTextFor:result]];
+        }
+      }
+      historyController.history = gameHistory;
+    }
+  }
+}
+
+//Abstract
 - (NSAttributedString *)titleForCard:(LTCard *)card {
+  return nil;
+}
+
+//Abstract
+- (NSAttributedString *)cardContent:(LTCard *)card {
   return nil;
 }
 
@@ -97,12 +120,12 @@ NS_ASSUME_NONNULL_BEGIN
                           forState:UIControlStateNormal];
     cardButton.enabled = !card.isMatched;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-    [self setLastConsiderationLabelText];
   }
+  [self setLastConsiderationLabelText];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+- (void)viewDidLoad {
+  [super viewDidLoad];
   [self resetGame];
 }
 

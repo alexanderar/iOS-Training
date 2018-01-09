@@ -29,7 +29,7 @@
             </objects>
             <point key="canvasLocation" x="-535" y="-583"/>
         </scene>
-        <!--Playing Card Game View Controller-->
+        <!--Matchismo Game-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="Playing Card Game" id="BYZ-38-t0r" customClass="LTPlayingCardGameViewController" sceneMemberID="viewController">
@@ -395,8 +395,13 @@
                         <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="7fa-kX-1PR">
-                        <barButtonItem key="rightBarButtonItem" title="History" id="Yip-KX-aQe"/>
+                    <navigationItem key="navigationItem" title="Matchismo Game" id="7fa-kX-1PR">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Vje-du-Fh8"/>
+                        <barButtonItem key="rightBarButtonItem" title="History" id="Yip-KX-aQe">
+                            <connections>
+                                <segue destination="wdT-Sn-moX" kind="push" identifier="ShowHistory" id="B2W-bs-SAd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="lastConsiderationLabel" destination="JRb-cd-WWa" id="A8V-ZF-zDw"/>
@@ -437,7 +442,7 @@
             </objects>
             <point key="canvasLocation" x="1516" y="-1012"/>
         </scene>
-        <!--Set Card Game View Controller-->
+        <!--Set Game-->
         <scene sceneID="oPm-aY-wl7">
             <objects>
                 <viewController storyboardIdentifier="Set Card Game" id="5gH-1t-fce" customClass="LTSetCardGameViewController" sceneMemberID="viewController">
@@ -725,8 +730,13 @@
                         <color key="backgroundColor" red="1" green="0.82646571729908902" blue="0.78433579882525772" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="4aW-jm-KpU"/>
                     </view>
-                    <navigationItem key="navigationItem" id="H4E-k8-NFC">
-                        <barButtonItem key="rightBarButtonItem" title="History" id="byb-Rs-eNH"/>
+                    <navigationItem key="navigationItem" title="Set Game" id="H4E-k8-NFC">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="VRx-iZ-b4Y"/>
+                        <barButtonItem key="rightBarButtonItem" title="History" id="byb-Rs-eNH">
+                            <connections>
+                                <segue destination="wdT-Sn-moX" kind="push" identifier="ShowHistory" id="AK0-ON-pzj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="lastConsiderationLabel" destination="FSR-Ma-Q3P" id="96m-V5-cAm"/>
@@ -765,11 +775,39 @@
             </objects>
             <point key="canvasLocation" x="1516" y="-217"/>
         </scene>
-        <!--Matchismo-->
+        <!--Game History-->
+        <scene sceneID="f7t-0A-ohu">
+            <objects>
+                <viewController id="wdT-Sn-moX" customClass="LTGameHistoryController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q3n-Jm-lnV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="X8x-wY-AIb">
+                                <rect key="frame" x="16" y="77" width="343" height="406"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="rzs-35-OzM"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Game History" id="yhX-R6-SWD"/>
+                    <connections>
+                        <outlet property="historyView" destination="X8x-wY-AIb" id="fYA-Uk-pXZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6lQ-Z3-zKX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2677.5999999999999" y="-600.44977511244383"/>
+        </scene>
+        <!--Matchismo Game-->
         <scene sceneID="utR-Ne-gIt">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hIC-R7-9Yw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Matchismo" id="1xk-NB-cEK"/>
+                    <tabBarItem key="tabBarItem" title="Matchismo Game" id="1xk-NB-cEK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CYC-f1-lPO">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -784,11 +822,11 @@
             </objects>
             <point key="canvasLocation" x="506" y="-1012"/>
         </scene>
-        <!--Set-->
+        <!--Set Game-->
         <scene sceneID="mZL-9h-cyD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dns-6W-KmR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Set" id="9IV-BM-b1W"/>
+                    <tabBarItem key="tabBarItem" title="Set Game" id="9IV-BM-b1W"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cKo-15-8U3">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -809,4 +847,7 @@
         <image name="cardfront" width="64" height="96"/>
         <image name="setCardCardfront" width="128" height="192"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="B2W-bs-SAd"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -22,6 +22,7 @@
 		3640BB211FFA33D7008D4892 /* LTCard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB1E1FFA33D7008D4892 /* LTCard.mm */; };
 		3640BB221FFA33D7008D4892 /* LTPlayingCard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB201FFA33D7008D4892 /* LTPlayingCard.mm */; };
 		3640BB251FFA348C008D4892 /* LTDeck.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB231FFA348C008D4892 /* LTDeck.mm */; };
+		365E228E2004F39700FCE582 /* LTGameHistoryController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 365E228C2004F39600FCE582 /* LTGameHistoryController.mm */; };
 		367A91AC1FFA5ACA0077179B /* LTPlayingCardDeck.mm in Sources */ = {isa = PBXBuildFile; fileRef = 367A91AA1FFA5ACA0077179B /* LTPlayingCardDeck.mm */; };
 		36D6066F2003A61000F910C6 /* LTSetCardMatchingGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36D6066D2003A61000F910C6 /* LTSetCardMatchingGame.mm */; };
 		36D606722003A63E00F910C6 /* LTPlayCardMatchingGame.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36D606702003A63E00F910C6 /* LTPlayCardMatchingGame.mm */; };
@@ -57,6 +58,8 @@
 		3640BB201FFA33D7008D4892 /* LTPlayingCard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LTPlayingCard.mm; sourceTree = "<group>"; };
 		3640BB231FFA348C008D4892 /* LTDeck.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTDeck.mm; sourceTree = "<group>"; };
 		3640BB241FFA348C008D4892 /* LTDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTDeck.h; sourceTree = "<group>"; };
+		365E228C2004F39600FCE582 /* LTGameHistoryController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTGameHistoryController.mm; sourceTree = "<group>"; };
+		365E228D2004F39600FCE582 /* LTGameHistoryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTGameHistoryController.h; sourceTree = "<group>"; };
 		367A91AA1FFA5ACA0077179B /* LTPlayingCardDeck.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTPlayingCardDeck.mm; sourceTree = "<group>"; };
 		367A91AB1FFA5ACA0077179B /* LTPlayingCardDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTPlayingCardDeck.h; sourceTree = "<group>"; };
 		36D6066D2003A61000F910C6 /* LTSetCardMatchingGame.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTSetCardMatchingGame.mm; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 				3609BAC61FFA138700AA109E /* Info.plist */,
 				3609BABB1FFA138700AA109E /* LTCardGameViewController.h */,
 				3609BABC1FFA138700AA109E /* LTCardGameViewController.mm */,
+				365E228D2004F39600FCE582 /* LTGameHistoryController.h */,
+				365E228C2004F39600FCE582 /* LTGameHistoryController.mm */,
 				361C19DC2003518C00CA87AF /* LTPlayingCardGameViewController.h */,
 				361C19DB2003518C00CA87AF /* LTPlayingCardGameViewController.mm */,
 				361C19DF2003551D00CA87AF /* LTSetCardGameViewController.h */,
@@ -222,6 +227,7 @@
 			files = (
 				367A91AC1FFA5ACA0077179B /* LTPlayingCardDeck.mm in Sources */,
 				3640BB251FFA348C008D4892 /* LTDeck.mm in Sources */,
+				365E228E2004F39700FCE582 /* LTGameHistoryController.mm in Sources */,
 				36D606722003A63E00F910C6 /* LTPlayCardMatchingGame.mm in Sources */,
 				3609BABD1FFA138700AA109E /* LTCardGameViewController.mm in Sources */,
 				361C19DA20025CD200CA87AF /* LTSetCardDeck.mm in Sources */,

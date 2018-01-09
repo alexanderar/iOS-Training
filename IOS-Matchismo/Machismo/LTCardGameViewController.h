@@ -24,9 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
 // abstract
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count;
 
-///Returns a title for a \c card.
+///Returns a title for a \c card. Takes into consideration wether card is chosen or not
 ///Abstract.
 - (NSAttributedString *)titleForCard:(LTCard *)card;
+
+- (NSAttributedString *)cardContent:(LTCard *)card;
 
 ///Target action that is triggered when user tuches a card.
 - (IBAction)touchCardButton:(UIButton *) button;
