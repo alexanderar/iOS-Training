@@ -31,12 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTCardGameViewController
 
-//abstract
+///Abstract
 - (UIImage *)backgroundImageForCard:(LTCard *)card {
   return nil;
 }
 
-//abstract
+///Abstract
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
   return nil;
 }

@@ -12,11 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIImage *)backgroundImageForCard:(LTCard *)card {
   return [UIImage imageNamed:card.isChosen ? @"setCardCardfront" : @"cardfront"];
 }
+
 - (NSAttributedString *)titleForCard:(LTCard *)card {
   return card.contents;
 }
 
-- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count{
+- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger)count{
   return [[LTSetCardMatchingGame alloc]initWithCardCount:count];
 }
 
