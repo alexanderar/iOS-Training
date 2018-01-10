@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
     [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                           forState:UIControlStateNormal];
     cardButton.enabled = !card.isMatched;
-    self.title = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+    self.navigationItem.title = [NSString stringWithFormat:@"Score: %ld", self.game.score];
   }
   [self setLastConsiderationLabelText];
 }
