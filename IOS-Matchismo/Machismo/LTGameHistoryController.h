@@ -5,13 +5,14 @@
 #import "LTGameIterationResult.h"
 NS_ASSUME_NONNULL_BEGIN
 
-///View controller that displays game history
+/// View controller that displays game's history. It receives an array of \c NSAttributedString
+/// where each element in the array displayed in a new row on the \c historyView.
 @interface LTGameHistoryController : UIViewController
 
-///Game history represented as a collection of text messages
+/// Game history represented as a collection of text messages.
 @property(nonatomic) NSArray<NSAttributedString *> *history;
 
-///History text view
+/// History text view.
 @property (weak, nonatomic) IBOutlet UITextView *historyView;
 
 @end

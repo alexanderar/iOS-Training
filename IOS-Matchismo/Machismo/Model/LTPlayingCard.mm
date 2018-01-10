@@ -20,7 +20,7 @@ static NSArray * _rankStrings = nil;
 }
 
 + (NSArray *)rankStrings {
-  if(!_rankStrings) {
+  if (!_rankStrings) {
     _rankStrings = @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"];
   }
   return _rankStrings;
@@ -38,14 +38,14 @@ static NSArray * _rankStrings = nil;
 }	
 
 - (void)setRank:(NSUInteger)rank {
-  if(rank <= [LTPlayingCard maxRank])
+  if (rank <= [LTPlayingCard maxRank])
   {
     _rank = rank;
   }
 }
 
 -(void)setSuit:(NSString *)suit {
-  if([[LTPlayingCard validSuits] containsObject : suit] )
+  if ([[LTPlayingCard validSuits] containsObject : suit] )
   {
     _suit = suit;
   }

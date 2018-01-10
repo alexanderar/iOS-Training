@@ -5,9 +5,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-///Playing card game view controller
+/// Playing card game view controller
 @interface LTPlayingCardGameViewController : LTCardGameViewController
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,29 +14,32 @@
 #import "LTGameHistoryController.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 @interface LTCardGameViewController ()
 
-///Collection of all cards displayed on the screen
+/// Collection of all cards displayed on the screen
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 
-///Game model
+/// Game model
 @property (strong, nonatomic) LTCardMatchingGame *game;
 
-///Label that displays a last consideration result.
+/// Label that displays a last consideration result.
 @property (weak, nonatomic) IBOutlet UILabel *lastConsiderationLabel;
 
 @end
 
 @implementation LTCardGameViewController
 
-///Abstract
+/// Abstract
 - (UIImage *)backgroundImageForCard:(LTCard *)card {
-  return nil;
+  [NSException raise:@"NSGenericException" format:@"Method not implemented"];
+  return [[UIImage alloc] init];
 }
 
-///Abstract
+/// Abstract
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
-  return nil;
+  [NSException raise:@"NSGenericException" format:@"Method not implemented"];
+  return [[LTCardMatchingGame alloc] initWithCardCount:0 usingDeck: [[LTDeck alloc] init]];
 }
 
 - (IBAction)resetGame {
@@ -45,19 +48,19 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSAttributedString *) createGameStatusTextFor:(LTGameIterationResult *)iterationResult {
-  if(!iterationResult) {
+  if (!iterationResult) {
     return [[NSAttributedString alloc]initWithString:@""];
   }
   NSMutableAttributedString *chosenCardsText = [[NSMutableAttributedString alloc] init];
-  for(LTCard *card in iterationResult.cards) {
+  for (LTCard *card in iterationResult.cards) {
     [chosenCardsText appendAttributedString:[self cardContent:card]];
     [chosenCardsText appendAttributedString:[[NSMutableAttributedString alloc]initWithString:@" "]];
   }
-  if(iterationResult.score == 0) {
+  if (iterationResult.score == 0) {
     return chosenCardsText;
   }
   NSMutableAttributedString *text;
-  if(iterationResult.score > 0) {
+  if (iterationResult.score > 0) {
     text = [[NSMutableAttributedString alloc] initWithString: @"Matched "];
     [text appendAttributedString:chosenCardsText];
     [text appendAttributedString:[[NSAttributedString alloc] initWithString:
@@ -71,18 +74,18 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)setLastConsiderationLabelText {
-  self.lastConsiderationLabel.attributedText = [self createGameStatusTextFor:
-      [self.game.history lastObject]];
+  self.lastConsiderationLabel.attributedText =
+      [self createGameStatusTextFor:[self.game.history lastObject]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(nullable id)sender {
-  if([segue.identifier isEqualToString:@"ShowHistory"]) {
-    if([segue.destinationViewController isKindOfClass:[LTGameHistoryController class]]) {
+  if ([segue.identifier isEqualToString:@"ShowHistory"]) {
+    if ([segue.destinationViewController isKindOfClass:[LTGameHistoryController class]]) {
       auto historyController = (LTGameHistoryController *)segue.destinationViewController;
-      NSMutableArray *gameHistory = [[NSMutableArray alloc]init];
-      for (int i = 0; i < self.game.history.count; i++) {
+      auto gameHistory = [[NSMutableArray alloc]init];
+      for (int i = 0; i < self.game.history.count; ++i) {
         LTGameIterationResult *result = self.game.history[i];
-        if(result && result.score != 0) {
+        if( result && result.score != 0) {
           [gameHistory addObject:[self createGameStatusTextFor:result]];
         }
       }
@@ -93,12 +96,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 //Abstract
 - (NSAttributedString *)titleForCard:(LTCard *)card {
-  return nil;
+  [NSException raise:@"NSGenericException" format:@"Method not implemented"];
+  return [[NSAttributedString alloc] init];
 }
 
 //Abstract
 - (NSAttributedString *)cardContent:(LTCard *)card {
-  return nil;
+  [NSException raise:@"NSGenericException" format:@"Method not implemented"];
+  return [[NSAttributedString alloc] init];
 }
 
 - (IBAction)touchCardButton:(UIButton *)button {
@@ -112,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSUInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
     LTCard *card = [self.game cardAtIndex:cardButtonIndex];
     [cardButton setAttributedTitle:[self titleForCard:card]
-      forState:UIControlStateNormal];
+                          forState:UIControlStateNormal];
     [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                           forState:UIControlStateNormal];
     cardButton.enabled = !card.isMatched;

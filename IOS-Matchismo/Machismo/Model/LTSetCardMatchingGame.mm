@@ -10,9 +10,9 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation LTSetCardMatchingGame
 
 
--(instancetype)initWithCardCount:(NSUInteger)count {
+- (instancetype)initWithCardCount:(NSUInteger)count {
   
-  if(self = [super initWithCardCount:count usingDeck: [[LTSetCardDeck alloc] init]])
+  if (self = [super initWithCardCount:count usingDeck: [[LTSetCardDeck alloc] init]])
   {
     return self;
   }
@@ -25,8 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (int)match:(NSArray *)cards {
   int score = 0;
-  if(cards && cards.count > 0)
-  {
+  if (cards && cards.count > 0) {
     BOOL matchByShade = [LTSetCardMatchingGame colorMatch:cards];
     BOOL matchByShape = [LTSetCardMatchingGame shadeMatch:cards];
     BOOL matchByNumber = [LTSetCardMatchingGame shapeMatch:cards];
@@ -49,12 +48,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)shadeMatch:(NSArray *)cards {
-  auto *shadeMatches =
-  [[NSMutableDictionary alloc]initWithDictionary: @{
+  auto *shadeMatches = [[NSMutableDictionary alloc] initWithDictionary: @{
       [NSNumber numberWithInt:LTSetCardShadeOpen]:@0,
       [NSNumber numberWithInt:LTSetCardShadeStriped]:@0,
       [NSNumber numberWithInt:LTSetCardShadeSolid]:@0
-  }];
+      }];
   for (LTSetCard *card in cards) {
     int currentValue = (int)[shadeMatches[@((int)card.shade)] integerValue];
     shadeMatches[@((int)card.shade)] =  [NSNumber numberWithInt:(currentValue + 1)];

@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class LTSetCard;
 
-///Deck of set cards that is used in Set card game.
+/// Deck of set cards that is used in Set card game.
 @interface LTSetCardDeck : LTDeck
 
 @end

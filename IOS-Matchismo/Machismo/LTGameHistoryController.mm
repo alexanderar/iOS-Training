@@ -10,14 +10,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  NSAttributedString *joinElement = [[NSAttributedString alloc] initWithString:@"\n\n"];
-  NSMutableAttributedString *historyText = [[NSMutableAttributedString alloc] init];
+  auto joinElement = [[NSAttributedString alloc] initWithString:@"\n\n"];
+  auto historyText = [[NSMutableAttributedString alloc] init];
   for (int i = 0; i< self.history.count; i++) {
     [historyText appendAttributedString:self.history[i]];
     [historyText appendAttributedString:joinElement];
   }
   [historyText addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15]
-      range:NSMakeRange(0, historyText.length)];
+                      range:NSMakeRange(0, historyText.length)];
   self.historyView.attributedText = historyText;
 }
 

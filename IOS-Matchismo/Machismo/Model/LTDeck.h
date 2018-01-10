@@ -5,20 +5,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class LTCard;
 
-///Object that repersents a generic deck of cards that is used in any card matching game.
+/// Object that repersents a deck of cards that is used in card matching game.
 @interface LTDeck : NSObject
 
-///Adds card to the deck. If \atTop is YES than the card is added to the top of the deck.
+/// Adds the given \c card the deck. If \c atTop is \c YES than the card is added to the top of
+/// the deck.
 - (void)addCard:(LTCard *)card atTop:(BOOL)atTop;
 
-///Adds card to the deck.
+/// Adds the given \c card to the deck.
 - (void)addCard:(LTCard *)card;
 
-/// Draws random card from the deck.
+/// Draws random card from the deck. The returned card is removed from the deck.
 - (LTCard *)drawRandomCard;
 
 /// Indicates whether deck is empty.
-- (BOOL) isEmpty;
+- (BOOL)isEmpty;
 
 @end
 

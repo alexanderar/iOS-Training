@@ -10,16 +10,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCardMatchingGame()
 
-///Number of cards that are used in current game.
+/// Number of cards that are used in current game.
 @property (readonly, nonatomic) NSUInteger cardCount;
 
-///Array of cards that are used in current game.
+/// Array of cards that are used in current game.
 @property (nonatomic,strong) NSMutableArray<LTCard *> *cards;
 
-///Backing property for public readonly history property.
+/// Backing property for public readonly history property.
 @property (nonatomic) NSMutableArray<LTGameIterationResult *> *gameStateHistory;
 
-///Backing property for the public readonly score property.
+/// Backing property for the public readonly score property.
 @property (nonatomic, readwrite) NSInteger score;
 
 @end
@@ -29,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
+
+# pragma mark -
+# pragma mark Initialization
+# pragma mark -
 
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck {
   if (self = [super init]) {
@@ -40,12 +44,16 @@ static const int COST_TO_CHOOSE = 1;
   return self;
 }
 
+# pragma mark -
+# pragma mark Public API
+# pragma mark -
+
 - (BOOL)resetGame {
   _cards = [[NSMutableArray alloc] init];
   LTDeck *deck = [self createDeck];
   for (int i = 0; i < self.cardCount; i++) {
     LTCard *card = [deck drawRandomCard];
-    if(card) {
+    if (card) {
       [self.cards addObject:card];
     } else {
       return NO;
@@ -55,18 +63,13 @@ static const int COST_TO_CHOOSE = 1;
   return YES;
 }
 
--(LTDeck *)createDeck {
+- (LTDeck *)createDeck {
   return nil;
 }
 
--(int)match:(NSArray<LTCard *> *)cards{
+- (int)match:(NSArray<LTCard *> *)cards{
   return 0;
 }
-
--(NSArray<LTGameIterationResult *> *)history {
-  return self.gameStateHistory;
-}
-
 
 - (LTCard *)cardAtIndex:(NSUInteger)index {
   return index < [self.cards count] ? self.cards[index] : nil;
@@ -85,7 +88,7 @@ static const int COST_TO_CHOOSE = 1;
       [chosenCards addObject:card];
     }
   }
-  if(touchedCard.isChosen) {
+  if (touchedCard.isChosen) {
     touchedCard.chosen = NO;
     [chosenCards removeObject:touchedCard];
   } else {
@@ -93,9 +96,9 @@ static const int COST_TO_CHOOSE = 1;
     [chosenCards insertObject:touchedCard atIndex:0];
     NSUInteger numberOfOtherChosenCards = [chosenCards count];
     
-    if(numberOfOtherChosenCards == self.allowedNumberOfChosenCards) {
+    if (numberOfOtherChosenCards == self.allowedNumberOfChosenCards) {
       int matchScore = [self match: chosenCards];
-      if(matchScore){
+      if (matchScore){
         scoreChange = matchScore * MATCH_BONUS;
         touchedCard.matched = YES;
         for (LTCard* chosenCard in chosenCards) {
@@ -118,6 +121,14 @@ static const int COST_TO_CHOOSE = 1;
 - (void)updateHistory:(NSInteger)result forCards:(NSArray *)cards {
   [self.gameStateHistory addObject:[[LTGameIterationResult alloc]initWithCards:cards
     withScore:result]];
+}
+
+# pragma mark -
+# pragma mark Properties
+# pragma mark -
+
+- (NSArray<LTGameIterationResult *> *)history {
+  return self.gameStateHistory;
 }
 
 @end

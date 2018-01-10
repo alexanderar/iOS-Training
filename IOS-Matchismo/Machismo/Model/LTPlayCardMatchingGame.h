@@ -5,15 +5,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-///Object that represents a playing card matching game.
+/// Object that represents a playing card matching game.
 @interface LTPlayCardMatchingGame : LTCardMatchingGame
 
 - (instancetype)init NS_UNAVAILABLE;
 
-///Initializes a new game with \c count cards from a new deck of playing cards.
+/// Initializes a new game with \c count cards from a new deck of playing cards.
 - (instancetype)initWithCardCount:(NSUInteger)count NS_DESIGNATED_INITIALIZER;
 
-///Encapsulates base LTCardMatchingGame initializer
+/// Encapsulates base LTCardMatchingGame initializer
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck NS_UNAVAILABLE;
 
 @end

@@ -11,11 +11,10 @@ static NSSet<NSString *> *_validShapes = nil;
 static NSSet<UIColor *> *_validColors = nil;
 
 
-- (instancetype)initWithShape:(NSString *)shape color:(NSString *)colorHexString shade:(LTSetCardShade)shade
-      number:(NSUInteger) number {
-  if(self=[super init])
-  {
-    if([[LTSetCard validShapes] containsObject:shape] &&
+- (instancetype)initWithShape:(NSString *)shape color:(NSString *)colorHexString
+                        shade:(LTSetCardShade)shade number:(NSUInteger) number {
+  if (self=[super init]) {
+    if ([[LTSetCard validShapes] containsObject:shape] &&
        [[LTSetCard validColors] containsObject:colorHexString] &&
        number >=1  && number <= 3) {
       _shape = shape;
@@ -34,14 +33,14 @@ static NSSet<UIColor *> *_validColors = nil;
 }
 
 + (NSSet<NSString *> *)validShapes {
-  if(!_validShapes) {
+  if (!_validShapes) {
     _validShapes = [[NSSet alloc] initWithArray: @[@"◼︎",@"▶︎",@"●"]];
   }
   return _validShapes;
 }
 
 + (NSSet<UIColor *> *)validColors {
-  if(!_validColors) {
+  if (!_validColors) {
     _validColors = [[NSSet alloc] initWithArray: @[@"#FF0000", @"#00FF00", @"#0000FF"]];
   }
   return _validColors;
