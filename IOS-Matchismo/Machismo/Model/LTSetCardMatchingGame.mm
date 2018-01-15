@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)shadeMatch:(NSArray *)cards {
   auto *shadeMatches = [[NSMutableDictionary alloc] initWithDictionary: @{
-      [NSNumber numberWithInt:LTSetCardShadeOpen]:@0,
+      [NSNumber numberWithInt:LTSetCardShadeUnfilled]:@0,
       [NSNumber numberWithInt:LTSetCardShadeStriped]:@0,
       [NSNumber numberWithInt:LTSetCardShadeSolid]:@0
       }];

@@ -39,12 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
   return  nil;
 }
 
-- (IBAction)resetGame {
-  [[self.cardsContainerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-  [self setup];
-  [self refreshGameBoardAnimated:YES];
-}
-
 - (void)updateScore{
   self.navigationItem.title = [NSString stringWithFormat:@"Score: %ld", self.game.score];
 }
@@ -55,56 +49,86 @@ NS_ASSUME_NONNULL_BEGIN
   [self updateScore];
 }
 
-- (void)updateUI {
-
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self setup];
+  self.gridHelper = [[LTGrid alloc] init];
+  [self initGame];
   [self refreshGameBoardAnimated:YES];
 }
 
 - (void)refreshGameBoardAnimated:(BOOL)animated {
-  self.gridHelper.size = self.cardsContainerView.bounds.size;
-  self.gridHelper.cellAspectRatio = (CGFloat)0.66;
-  self.gridHelper.minimumNumberOfCells = self.game.cardCount;
-  for (int i = 0; i < self.cardsContainerView.subviews.count; ++i) {
-    UIView *cardView = self.cardsContainerView.subviews[i];
-    CGRect frame = [self.gridHelper frameOfCellAtRow:(i / self.gridHelper.columnCount)
-                                            inColumn:(i % self.gridHelper.columnCount)];
-    if (animated) {
-      UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
-        curve:UIViewAnimationCurveEaseInOut animations:^{
-           cardView.frame = frame;
-        }];
-      [animator startAnimationAfterDelay:i * 0.1f];
-      [animator startAnimation];
-    } else {
-      [cardView setFrame:frame];
-    }
-  }
   [self updateScore];
 }
 
-- (void)setup {
+- (void)initGame {
   self.game = [self createGameWithCardCount: DEFAULT_CARD_COUNT];
+  [self updateScore];
   self.cardsContainerView.backgroundColor = nil;
   self.cardsContainerView.opaque = NO;
-  self.gridHelper = [[LTGrid alloc] init];
+  self.gridHelper.size = self.cardsContainerView.bounds.size;
+  self.gridHelper.cellAspectRatio = (CGFloat)0.66;
+  self.gridHelper.minimumNumberOfCells = self.game.cardCount;
   self.gameBoardView.backgroundColor = nil;
   self.gameBoardView.opaque = NO;
   [self setCardDeckView];
   for (int i = 0; i< self.game.cardCount; ++i) {
     LTCard *card = [self.game cardAtIndex:i];
-    CGRect frame = self.cardDeckView.frame;
-    UIView *cardView = [self createViewFor:card withFrame:frame];
+    UIView *cardView = [self createViewFor:card withFrame:self.cardDeckView.frame];
     [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
-      action:@selector(touchCard:)]];
+        action:@selector(touchCard:)]];
     [self.cardsContainerView addSubview:cardView];
+    CGRect frame = [self.gridHelper frameOfCellAtRow:(i / self.gridHelper.columnCount)
+                                            inColumn:(i % self.gridHelper.columnCount)];
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
+    curve:UIViewAnimationCurveEaseInOut animations:^{
+      cardView.frame = frame;
+    }];
+    [animator startAnimationAfterDelay:i * 0.1f];
+    [animator startAnimation];
   }
-  [self updateScore];
 }
+
+- (IBAction)resetGame {
+  __weak LTCardGameViewController *weakSelf = self;
+  CABasicAnimation *rotationAnimation = [LTCardGameViewController rotationAnimationBy:360];
+  CGFloat radius = MAX(self.cardsContainerView.bounds.size.width,
+                       self.cardsContainerView.bounds.size.height);
+  UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:1
+    curve:UIViewAnimationCurveEaseInOut animations:^{
+      for (int i = 0; i < weakSelf.cardsContainerView.subviews.count; ++i) {
+        UIView *cardView = weakSelf.cardsContainerView.subviews[i];
+        [cardView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+        int randomAngleInDeg = 180 + arc4random()%180;
+        double randomAngleInRad = [LTCardGameViewController degreeToRadConvert:randomAngleInDeg];
+        [cardView setFrame:CGRectMake(radius/cos(randomAngleInRad), radius/sin(randomAngleInRad),
+                                      cardView.frame.size.width, cardView.frame.size.height)];
+      }
+    }];
+  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+    [weakSelf.cardsContainerView.subviews
+     makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [weakSelf initGame];
+  }];
+  [animator startAnimation];
+}
+
++ (CGFloat)degreeToRadConvert:(CGFloat)degree {
+  return M_PI * degree / 180;
+}
+
++ (CABasicAnimation *) rotationAnimationBy:(CGFloat) degrees {
+  CABasicAnimation *rotationAnimation;
+  rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+  rotationAnimation.toValue = [NSNumber numberWithFloat:
+                               [LTCardGameViewController degreeToRadConvert:degrees]];
+  rotationAnimation.duration = 0.5;
+  rotationAnimation.cumulative = YES;
+  rotationAnimation.repeatCount = 1.0;
+  rotationAnimation.timingFunction = [CAMediaTimingFunction
+                                      functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+  return rotationAnimation;
+}
+
 
 #define CARD_DECK_HEIGHT 96.0
 #define CARD_DECK_WIDTH 64.0
@@ -118,10 +142,6 @@ NS_ASSUME_NONNULL_BEGIN
   self.cardDeckView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardback"]];
   [self.cardDeckView setFrame:cardDeckFrame];
   [self.gameBoardView addSubview:self.cardDeckView];
-}
-
-- (void)clearGameBoard {
-  [[self.cardsContainerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
 

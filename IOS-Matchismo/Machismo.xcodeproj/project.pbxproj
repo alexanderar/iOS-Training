@@ -19,6 +19,7 @@
 		361C19E02003551D00CA87AF /* LTSetCardGameViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 361C19DE2003551D00CA87AF /* LTSetCardGameViewController.mm */; };
 		361C19E220035D5200CA87AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 361C19E120035D5200CA87AF /* Assets.xcassets */; };
 		361C19E820038DEC00CA87AF /* LTGameIterationResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = 361C19E620038DEC00CA87AF /* LTGameIterationResult.mm */; };
+		362AE437200CF6C900FE37DE /* LTSetCardView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 362AE435200CF6C900FE37DE /* LTSetCardView.mm */; };
 		3640BB211FFA33D7008D4892 /* LTCard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB1E1FFA33D7008D4892 /* LTCard.mm */; };
 		3640BB221FFA33D7008D4892 /* LTPlayingCard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB201FFA33D7008D4892 /* LTPlayingCard.mm */; };
 		3640BB251FFA348C008D4892 /* LTDeck.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB231FFA348C008D4892 /* LTDeck.mm */; };
@@ -54,6 +55,8 @@
 		361C19E120035D5200CA87AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		361C19E620038DEC00CA87AF /* LTGameIterationResult.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTGameIterationResult.mm; sourceTree = "<group>"; };
 		361C19E720038DEC00CA87AF /* LTGameIterationResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTGameIterationResult.h; sourceTree = "<group>"; };
+		362AE435200CF6C900FE37DE /* LTSetCardView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTSetCardView.mm; sourceTree = "<group>"; };
+		362AE436200CF6C900FE37DE /* LTSetCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTSetCardView.h; sourceTree = "<group>"; };
 		3640BB1D1FFA33D6008D4892 /* LTPlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPlayingCard.h; sourceTree = "<group>"; };
 		3640BB1E1FFA33D7008D4892 /* LTCard.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LTCard.mm; sourceTree = "<group>"; };
 		3640BB1F1FFA33D7008D4892 /* LTCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCard.h; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				365E22B72007BCCB00FCE582 /* LTPlayingCardView.mm */,
 				361C19DF2003551D00CA87AF /* LTSetCardGameViewController.h */,
 				361C19DE2003551D00CA87AF /* LTSetCardGameViewController.mm */,
+				362AE436200CF6C900FE37DE /* LTSetCardView.h */,
+				362AE435200CF6C900FE37DE /* LTSetCardView.mm */,
 				3609BABE1FFA138700AA109E /* Main.storyboard */,
 				3640BB1C1FFA33BA008D4892 /* Model */,
 				3609BAD31FFA28A700AA109E /* Supporting Files */,
@@ -250,6 +255,7 @@
 				366A73A0200B5A6F007738DD /* LTCardView.mm in Sources */,
 				3640BB211FFA33D7008D4892 /* LTCard.mm in Sources */,
 				3609BAC81FFA138700AA109E /* main.m in Sources */,
+				362AE437200CF6C900FE37DE /* LTSetCardView.mm in Sources */,
 				36D6066F2003A61000F910C6 /* LTSetCardMatchingGame.mm in Sources */,
 				361C19D7200222C600CA87AF /* LTSetCard.mm in Sources */,
 				3609BABA1FFA138700AA109E /* LTCardGameAppDelegate.mm in Sources */,

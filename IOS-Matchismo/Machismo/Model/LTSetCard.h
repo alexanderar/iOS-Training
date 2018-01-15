@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Enum that represents different shade options for the card.
 typedef NS_ENUM(NSInteger, LTSetCardShade) {
-  LTSetCardShadeOpen = 0,
+  LTSetCardShadeUnfilled = 0,
   LTSetCardShadeStriped = 1,
   LTSetCardShadeSolid = 2
 };

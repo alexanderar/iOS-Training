@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, nonatomic) LTPlayingCard *playingCard;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

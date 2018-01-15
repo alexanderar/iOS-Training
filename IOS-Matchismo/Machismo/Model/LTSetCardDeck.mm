@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
   if (self = [super init]) {
     for (NSString *shape in [LTSetCard validShapes]) {
       for (NSString *color in [LTSetCard validColors]) {
-        for (int shade = LTSetCardShadeOpen; shade <= LTSetCardShadeSolid; shade++) {
+        for (int shade = LTSetCardShadeUnfilled; shade <= LTSetCardShadeSolid; shade++) {
           for (int i = 1; i <= [LTSetCard maxNumber] ; i++) {
             LTSetCard *card = [[LTSetCard alloc] initWithShape:shape color:color
               shade:(LTSetCardShade)shade number:i];

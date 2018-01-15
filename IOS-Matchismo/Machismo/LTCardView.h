@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Card model
 @property (nonatomic) LTCard *card;
 
+@property (nonatomic) CGFloat cardContentScaleFactor;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

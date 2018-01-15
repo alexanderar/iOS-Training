@@ -10,7 +10,7 @@
 #import "LTPlayingCard.h"
 
 @interface LTPlayingCardView()
-@property (nonatomic) CGFloat faceCardScaleFactor;
+
 @end
 
 @implementation LTPlayingCardView
@@ -21,7 +21,8 @@
 
 #define DEFAULT_FACE_CARD_SCALE_FACTOR 0.90
 
-@synthesize faceCardScaleFactor = _faceCardScaleFactor;
+
+
 @synthesize card = _card;
 
 - (LTPlayingCard *)playingCard {
@@ -34,18 +35,6 @@
     _card = card;
     [self setNeedsDisplay];
   }
-}
-
-- (CGFloat)faceCardScaleFactor
-{
-  if (!_faceCardScaleFactor) _faceCardScaleFactor = DEFAULT_FACE_CARD_SCALE_FACTOR;
-  return _faceCardScaleFactor;
-}
-
-- (void)setFaceCardScaleFactor:(CGFloat)faceCardScaleFactor
-{
-  _faceCardScaleFactor = faceCardScaleFactor;
-  [self setNeedsDisplay];
 }
 
 - (NSString *)rankAsString
@@ -91,8 +80,8 @@
                              [self rankAsString], self.playingCard.suit]];
                          if (faceImage) {
                            CGRect imageRect = CGRectInset(self.bounds,
-                               self.bounds.size.width * (1.0-self.faceCardScaleFactor),
-                               self.bounds.size.height * (1.0-self.faceCardScaleFactor));
+                               self.bounds.size.width * (1.0-self.cardContentScaleFactor),
+                               self.bounds.size.height * (1.0-self.cardContentScaleFactor));
                            [faceImage drawInRect:imageRect];
                          } else {
                            [self drawPips];
@@ -197,7 +186,7 @@
   }
 }
 
-#define PIP_FONT_SCALE_FACTOR 0.012
+#define PIP_FONT_SCALE_FACTOR 0.009
 
 - (void)drawPipsWithHorizontalOffset:(CGFloat)hoffset
                       verticalOffset:(CGFloat)voffset

@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation LTSetCard
 
 static NSSet<NSString *> *_validShapes = nil;
-static NSSet<UIColor *> *_validColors = nil;
+static NSSet<NSString *> *_validColors = nil;
 
 
 - (instancetype)initWithShape:(NSString *)shape color:(NSString *)colorHexString
@@ -34,12 +34,12 @@ static NSSet<UIColor *> *_validColors = nil;
 
 + (NSSet<NSString *> *)validShapes {
   if (!_validShapes) {
-    _validShapes = [[NSSet alloc] initWithArray: @[@"◼︎",@"▶︎",@"●"]];
+    _validShapes = [[NSSet alloc] initWithArray: @[@"squiggle",@"diamond",@"oval"]];
   }
   return _validShapes;
 }
 
-+ (NSSet<UIColor *> *)validColors {
++ (NSSet<NSString *> *)validColors {
   if (!_validColors) {
     _validColors = [[NSSet alloc] initWithArray: @[@"#FF0000", @"#00FF00", @"#0000FF"]];
   }
