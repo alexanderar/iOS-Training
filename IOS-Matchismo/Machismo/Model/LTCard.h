@@ -6,6 +6,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Base object that represents a generic card in any card matching game.
 @interface LTCard : NSObject
 
++ (NSSet *)keyPathsForValuesAffectingCard;
+
 /// Card content.
 @property (strong, nonatomic) NSString *contents;
 

@@ -2,28 +2,28 @@
 // Created by Alex Artyomov.
 
 #import "LTPlayingCardGameViewController.h"
-#import "LTPlayingCardDeck.h"
-#import "LTCard.h"
+#import "LTPlayingCard.h"
 #import "LTPlayCardMatchingGame.h"
+#import "LTPlayingCardView.h"
+#import "LTGrid.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTPlayingCardGameViewController
 
-- (UIImage *)backgroundImageForCard:(LTCard *)card {
-  return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
-}
-- (NSAttributedString *)titleForCard:(LTCard *)card {
-  return card.isChosen ? [self cardContent:card] : [[NSAttributedString alloc]initWithString: @""];
-}
-
-//Abstract
-- (NSAttributedString *)cardContent:(LTCard *)card {
-  return [[NSAttributedString alloc]initWithString: card.contents];
-}
-
--(LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
+- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
   return [[LTPlayCardMatchingGame alloc]initWithCardCount:count];
 }
+
+- (UIView *)createViewFor:(LTPlayingCard *)card withFrame:(CGRect)frame {
+  auto cardView = [[LTPlayingCardView alloc]initWithFrame:frame];
+  cardView.card = card;
+  return cardView;
+}
+
+- (void)refreshGameBoardAnimated:(BOOL)animated {
+  [super refreshGameBoardAnimated:animated];
+}
+
 
 @end
 

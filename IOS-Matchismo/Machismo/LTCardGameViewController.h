@@ -7,31 +7,34 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LTDeck.h"
 #import "LTCardMatchingGame.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class LTGrid;
 /// Object that represnts a base card game view controller. Any particular card game view controller
 /// should derive from it.
 @interface LTCardGameViewController : UIViewController
 
-/// Returns a background image for a \c card.
-/// Abstract.
-- (UIImage *)backgroundImageForCard:(LTCard *)card;
+@property (weak, nonatomic) IBOutlet UIView *cardsContainerView;
+
+@property (weak, nonatomic) IBOutlet UIView *gameBoardView;
+
+@property (nonatomic, strong) LTGrid *cardsDisplayGridHelper;
+
+/// Game model
+@property (readonly, nonatomic ) LTCardMatchingGame *game;
 
 /// Creates a new game with number of cards specified by \c count.
 /// Abstract
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count;
 
-/// Returns a title for a \c card. Takes into consideration wether card is chosen or not
-/// Abstract.
-- (NSAttributedString *)titleForCard:(LTCard *)card;
+- (UIView *)createViewFor:(LTCard *)card withFrame:(CGRect)frame;
 
-- (NSAttributedString *)cardContent:(LTCard *)card;
+- (void)refreshGameBoardAnimated:(BOOL)animated;
 
-/// Target action that is triggered when user tuches a card.
-- (IBAction)touchCardButton:(UIButton *) button;
+///// Target action that is triggered when user tuches a card.
+- (void)touchCard:(UITapGestureRecognizer *) card;
 
 @end
 NS_ASSUME_NONNULL_END

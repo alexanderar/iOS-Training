@@ -9,29 +9,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTSetCardGameViewController
 
-- (UIImage *)backgroundImageForCard:(LTCard *)card {
-  return [UIImage imageNamed:card.isChosen ? @"setCardCardfront" : @"cardfront"];
-}
+//- (UIImage *)backgroundImageForCard:(LTCard *)card {
+//  return [UIImage imageNamed:card.isChosen ? @"setCardCardfront" : @"cardfront"];
+//}
+//
+//- (NSAttributedString *)titleForCard:(LTCard *)card {
+//  return [self cardContent:card];
+//}
 
-- (NSAttributedString *)titleForCard:(LTCard *)card {
-  return [self cardContent:card];
-}
-
-- (NSAttributedString *)cardContent:(LTSetCard *)setCard {
-  auto stringContent = [[NSMutableString alloc] initWithCapacity:setCard.number];
-  for (int i = 0; i < setCard.number; ++i) {
-    [stringContent appendString:setCard.shape];
-  }
-  auto color = [LTSetCardGameViewController colorFromHexString:setCard.colorHexString];
-  auto attributes = [[NSMutableDictionary alloc] init];
-  attributes[NSStrokeWidthAttributeName] = @-5;
-  attributes[NSStrokeColorAttributeName] = color;
-  attributes[NSForegroundColorAttributeName] =
-      [color colorWithAlphaComponent:pow((double)setCard.shade / 2,2)];
-  auto attrContent = [[NSAttributedString alloc] initWithString:stringContent
-                                                     attributes:attributes];
-  return attrContent;
-}
+//- (NSAttributedString *)cardContent:(LTSetCard *)setCard {
+//  auto stringContent = [[NSMutableString alloc] initWithCapacity:setCard.number];
+//  for (int i = 0; i < setCard.number; ++i) {
+//    [stringContent appendString:setCard.shape];
+//  }
+//  auto color = [LTSetCardGameViewController colorFromHexString:setCard.colorHexString];
+//  auto attributes = [[NSMutableDictionary alloc] init];
+//  attributes[NSStrokeWidthAttributeName] = @-5;
+//  attributes[NSStrokeColorAttributeName] = color;
+//  attributes[NSForegroundColorAttributeName] =
+//      [color colorWithAlphaComponent:pow((double)setCard.shade / 2,2)];
+//  auto attrContent = [[NSAttributedString alloc] initWithString:stringContent
+//                                                     attributes:attributes];
+//  return attrContent;
+//}
 
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger)count{
   return [[LTSetCardMatchingGame alloc] initWithCardCount:count];

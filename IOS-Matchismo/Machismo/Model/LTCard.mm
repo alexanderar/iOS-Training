@@ -6,6 +6,24 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTCard
+
+static NSSet* _keyPathsForValuesAffectingCard = nil;
+
++ (NSSet *)keyPathsForValuesAffectingCard {
+
+  if(!_keyPathsForValuesAffectingCard)
+  {
+     _keyPathsForValuesAffectingCard = [NSSet setWithObjects:@"chosen", @"matched", nil];
+  }
+  return _keyPathsForValuesAffectingCard;
+}
+
+- (void)setChosen:(BOOL)chosen{
+  [self willChangeValueForKey:@"chosen"];
+  _chosen = chosen;
+  [self didChangeValueForKey:@"chosen"];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

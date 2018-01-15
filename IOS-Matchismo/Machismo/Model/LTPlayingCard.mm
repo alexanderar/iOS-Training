@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @synthesize suit = _suit;
 
-static NSArray * _validSuits = nil;
-static NSArray * _rankStrings = nil;
+static NSArray *_validSuits = nil;
+static NSArray *_rankStrings = nil;
 
 + (NSUInteger)maxRank {
   return [[LTPlayingCard rankStrings] count] - 1;

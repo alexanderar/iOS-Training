@@ -16,11 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
     NS_DESIGNATED_INITIALIZER;
 
 /// Returns card at specific \c index.
-- (LTCard *)cardAtIndex:(NSUInteger) index;
+- (LTCard *)cardAtIndex:(NSUInteger)index;
 
 /// Chooses a card at specific \c index. Once number of chosen cards reaches an allowed number of
 /// chosen cards that is configured for the game, matchisng logic is triggerd.
-- (void)chooseCardAtIndex:(NSUInteger) index;
+- (void)chooseCardAtIndex:(NSUInteger)index;
+
+- (void)chooseCard:(LTCard *)card;
 
 /// Creates a deck of cards. Abstract method that should be implemented in derived class.
 - (LTDeck *)createDeck;
@@ -41,6 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Game history - contains all the choises and matching result that were performed through the game
 /// since reset.
 @property (readonly, nonatomic) NSArray<LTGameIterationResult *> *history;
+
+/// Number of cards that are used in current game.
+@property (readonly, nonatomic) NSUInteger cardCount;
 
 @end
 
