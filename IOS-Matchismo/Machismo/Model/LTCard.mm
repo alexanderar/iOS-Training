@@ -18,11 +18,11 @@ static NSSet* _keyPathsForValuesAffectingCard = nil;
   return _keyPathsForValuesAffectingCard;
 }
 
-- (void)setChosen:(BOOL)chosen{
-  [self willChangeValueForKey:@"chosen"];
-  _chosen = chosen;
-  [self didChangeValueForKey:@"chosen"];
-}
+//- (void)setChosen:(BOOL)chosen{
+//  _chosen = chosen;
+//}
+
+
 
 @end
 

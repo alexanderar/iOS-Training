@@ -7,9 +7,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class LTSetCard;
 
+/// View that displays set card
 @interface LTSetCardView : LTCardView
 
-@property (readonly, nonatomic) LTSetCard *setGameCard;
+/// Set card that is used as a model for this view
+@property (readonly, nonatomic) LTSetCard *gameCard;
 
 @end
 

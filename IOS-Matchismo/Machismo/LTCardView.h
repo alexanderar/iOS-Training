@@ -14,11 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 ///Generic view that is used to display a card
 @interface LTCardView : UIView
 
+/// Performs all the setup opreations that are needed on view initailzation. This is method will be
+/// called in /c initWithFrame and /c awaikeFromNib methods
+- (void)setup;
+
 /// Card model
 @property (nonatomic) LTCard *card;
 
+/// Property that defines the ratio between size of the card view and its content.
 @property (nonatomic) CGFloat cardContentScaleFactor;
-
 
 @end
 

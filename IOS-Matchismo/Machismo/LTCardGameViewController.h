@@ -34,12 +34,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// Abstract
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count;
 
+/// Abstract method that is used to create a specific card view in a given /c frame for given
+/// /c card.
 - (UIView *)createViewFor:(LTCard *)card withFrame:(CGRect)frame;
-
-- (void)refreshGameBoardAnimated:(BOOL)animated;
 
 ///// Target action that is triggered when user tuches a card.
 - (void)touchCard:(UITapGestureRecognizer *) card;
+
+- (void)refreshCardsGrid;
 
 @end
 NS_ASSUME_NONNULL_END

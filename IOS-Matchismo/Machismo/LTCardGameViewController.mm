@@ -12,16 +12,15 @@
 #import "LTDeck.h"
 #import "LTGrid.h"
 #import "LTCardView.h"
-
-
+#import "UIKit/UIKit.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCardGameViewController ()
 
-@property (nonatomic) LTGrid *gridHelper;
-
+/// Game model.
 @property (readwrite, nonatomic) LTCardMatchingGame *game;
 
+/// View that displays a deck of cards.
 @property (nonatomic) UIImageView *cardDeckView;
 
 @end
@@ -47,27 +46,24 @@ NS_ASSUME_NONNULL_BEGIN
   LTCardView *cardView = (LTCardView *)card.view;
   [self.game chooseCard:cardView.card];
   [self updateScore];
+  [self refreshCardsGrid];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.gridHelper = [[LTGrid alloc] init];
+  self.cardsDisplayGridHelper = [[LTGrid alloc] init];
   [self initGame];
-  [self refreshGameBoardAnimated:YES];
-}
-
-- (void)refreshGameBoardAnimated:(BOOL)animated {
   [self updateScore];
 }
 
 - (void)initGame {
-  self.game = [self createGameWithCardCount: DEFAULT_CARD_COUNT];
+  self.game = [self createGameWithCardCount:DEFAULT_CARD_COUNT];
   [self updateScore];
   self.cardsContainerView.backgroundColor = nil;
   self.cardsContainerView.opaque = NO;
-  self.gridHelper.size = self.cardsContainerView.bounds.size;
-  self.gridHelper.cellAspectRatio = (CGFloat)0.66;
-  self.gridHelper.minimumNumberOfCells = self.game.cardCount;
+  self.cardsDisplayGridHelper.size = self.cardsContainerView.bounds.size;
+  self.cardsDisplayGridHelper.cellAspectRatio = (CGFloat)0.66;
+  self.cardsDisplayGridHelper.minimumNumberOfCells = self.game.cardCount;
   self.gameBoardView.backgroundColor = nil;
   self.gameBoardView.opaque = NO;
   [self setCardDeckView];
@@ -77,8 +73,9 @@ NS_ASSUME_NONNULL_BEGIN
     [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
         action:@selector(touchCard:)]];
     [self.cardsContainerView addSubview:cardView];
-    CGRect frame = [self.gridHelper frameOfCellAtRow:(i / self.gridHelper.columnCount)
-                                            inColumn:(i % self.gridHelper.columnCount)];
+    CGRect frame = [self.cardsDisplayGridHelper
+                    frameOfCellAtRow:(i / self.cardsDisplayGridHelper.columnCount)                    
+                    inColumn:(i % self.cardsDisplayGridHelper.columnCount)];
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
     curve:UIViewAnimationCurveEaseInOut animations:^{
       cardView.frame = frame;
@@ -116,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
   return M_PI * degree / 180;
 }
 
-+ (CABasicAnimation *) rotationAnimationBy:(CGFloat) degrees {
++ (CABasicAnimation *)rotationAnimationBy:(CGFloat)degrees {
   CABasicAnimation *rotationAnimation;
   rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
   rotationAnimation.toValue = [NSNumber numberWithFloat:
@@ -129,21 +126,25 @@ NS_ASSUME_NONNULL_BEGIN
   return rotationAnimation;
 }
 
+- (void)refreshCardsGrid {
+}
 
 #define CARD_DECK_HEIGHT 96.0
 #define CARD_DECK_WIDTH 64.0
 #define GAME_BOARD_BOTTOM_MARGIN 5.0
+
+
 - (void) setCardDeckView {
-  CGFloat cardDeckOriginX = self.gameBoardView.bounds.size.width / 2 - CARD_DECK_WIDTH /2;
+  CGFloat cardDeckOriginX = self.gameBoardView.bounds.size.width / 2 - CARD_DECK_WIDTH / 2;
   CGFloat cardDeckOriginY = self.gameBoardView.bounds.size.height - CARD_DECK_HEIGHT - 5;
-  auto cardDeckFrame = CGRectMake(cardDeckOriginX, cardDeckOriginY,
-                                  CARD_DECK_WIDTH,
+  auto cardDeckFrame = CGRectMake(cardDeckOriginX, cardDeckOriginY, CARD_DECK_WIDTH,
                                   CARD_DECK_HEIGHT);
+  
   self.cardDeckView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardback"]];
   [self.cardDeckView setFrame:cardDeckFrame];
   [self.gameBoardView addSubview:self.cardDeckView];
 }
 
-
 @end
+
 NS_ASSUME_NONNULL_END

@@ -20,10 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
   return cardView;
 }
 
-- (void)refreshGameBoardAnimated:(BOOL)animated {
-  [super refreshGameBoardAnimated:animated];
-}
-
 
 @end
 

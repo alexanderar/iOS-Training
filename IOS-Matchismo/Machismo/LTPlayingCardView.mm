@@ -9,10 +9,6 @@
 #import "LTPlayingCardView.h"
 #import "LTPlayingCard.h"
 
-@interface LTPlayingCardView()
-
-@end
-
 @implementation LTPlayingCardView
 
 # pragma mark -
@@ -21,15 +17,13 @@
 
 #define DEFAULT_FACE_CARD_SCALE_FACTOR 0.90
 
-
-
 @synthesize card = _card;
 
 - (LTPlayingCard *)playingCard {
   return (LTPlayingCard *)self.card;
 }
 
--(void)setCard:(LTCard *)card{
+- (void)setCard:(LTCard *)card {
   if ([card isKindOfClass:LTPlayingCard.class])
   {
     _card = card;
@@ -37,8 +31,7 @@
   }
 }
 
-- (NSString *)rankAsString
-{
+- (NSString *)rankAsString {
   if (!self.playingCard.rank) {
     return @"?";
   }
@@ -46,11 +39,9 @@
       [self.playingCard.rank];
 }
 
-
 # pragma mark -
 # pragma mark - Drawing
 # pragma mark -
-
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
 #define CORNER_RADIUS 12.0
@@ -59,9 +50,8 @@
 - (CGFloat)cornerRadius { return CORNER_RADIUS * [self cornerScaleFactor]; }
 - (CGFloat)cornerOffset { return [self cornerRadius] / 3.0; }
 
-- (void)drawRect:(CGRect)rect
-{
-  // Drawing code
+- (void)drawRect:(CGRect)rect {
+  
   auto *roundedRect =
   [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:[self cornerRadius]];
   
@@ -102,16 +92,14 @@
   }
 }
 
-- (void)pushContextAndRotateUpsideDown
-{
+- (void)pushContextAndRotateUpsideDown {
   CGContextRef context = UIGraphicsGetCurrentContext();
   CGContextSaveGState(context);
   CGContextTranslateCTM(context, self.bounds.size.width, self.bounds.size.height);
   CGContextRotateCTM(context, M_PI);
 }
 
-- (void)popContext
-{
+- (void)popContext {
   CGContextRestoreGState(UIGraphicsGetCurrentContext());
 }
 
@@ -119,9 +107,7 @@
 # pragma mark - Corners
 # pragma mark -
 
-
-- (void)drawCorners
-{
+- (void)drawCorners {
   auto paragraphStyle = [[NSMutableParagraphStyle alloc] init];
   paragraphStyle.alignment = NSTextAlignmentCenter;
   
@@ -149,14 +135,12 @@
 # pragma mark - Pips
 # pragma mark -
 
-
 #define PIP_HOFFSET_PERCENTAGE 0.165
 #define PIP_VOFFSET1_PERCENTAGE 0.090
 #define PIP_VOFFSET2_PERCENTAGE 0.175
 #define PIP_VOFFSET3_PERCENTAGE 0.270
 
-- (void)drawPips
-{
+- (void)drawPips {
   if ((self.playingCard.rank == 1) || (self.playingCard.rank == 5) || (self.playingCard.rank == 9)
       || (self.playingCard.rank == 3)) {
     [self drawPipsWithHorizontalOffset:0
@@ -188,10 +172,8 @@
 
 #define PIP_FONT_SCALE_FACTOR 0.009
 
-- (void)drawPipsWithHorizontalOffset:(CGFloat)hoffset
-                      verticalOffset:(CGFloat)voffset
-                          upsideDown:(BOOL)upsideDown
-{
+- (void)drawPipsWithHorizontalOffset:(CGFloat)hoffset verticalOffset:(CGFloat)voffset
+                          upsideDown:(BOOL)upsideDown {
   if (upsideDown) [self pushContextAndRotateUpsideDown];
   auto middle = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
   auto pipFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -206,16 +188,19 @@
                                middle.y - pipSize.height /2.0 -voffset * self.bounds.size.height
                                );
   [attributedSuit drawAtPoint:pipOrigin];
+  
   if (hoffset) {
     pipOrigin.x += hoffset * 2.0 * self.bounds.size.width;
     [attributedSuit drawAtPoint:pipOrigin];
   }
-  if (upsideDown) [self popContext];
+  
+  if (upsideDown) {
+    [self popContext];
+  }
 }
 
 - (void)drawPipsWithHorizontalOffset:(CGFloat)hoffset verticalOffset:(CGFloat)voffset
-                  mirroredVertically:(BOOL)mirroredVertically
-{
+                  mirroredVertically:(BOOL)mirroredVertically {
   [self drawPipsWithHorizontalOffset:hoffset
                       verticalOffset:voffset
                           upsideDown:NO];
@@ -228,26 +213,19 @@
 # pragma mark - Initialization
 # pragma mark -
 
-
-- (void)setup
-{
+- (void)setup {
+  [super setup];
   self.backgroundColor = nil;
   self.opaque = NO;
   self.contentMode = UIViewContentModeRedraw;
-  for (NSString *key in LTCard.keyPathsForValuesAffectingCard) {
-    [self addObserver:self forKeyPath: [@"card." stringByAppendingString:key]
-              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-  }
 }
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
   [super awakeFromNib];
   [self setup];
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   [self setup];
   return self;

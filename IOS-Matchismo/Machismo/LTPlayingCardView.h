@@ -12,8 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class LTPlayingCard;
 
+/// View that displays playing cards
 @interface LTPlayingCardView : LTCardView
 
+/// Playing card that serves as a model for this view
 @property (readonly, nonatomic) LTPlayingCard *playingCard;
 
 @end

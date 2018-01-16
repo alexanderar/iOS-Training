@@ -35,5 +35,21 @@
   [self setNeedsDisplay];
 }
 
+- (void)setup {
+  for (NSString *key in LTCard.keyPathsForValuesAffectingCard) {
+    [self addObserver:self forKeyPath: [@"card." stringByAppendingString:key]
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+  }
+}
+
+-(void)dealloc {
+  @try {
+    for (NSString *key in LTCard.keyPathsForValuesAffectingCard) {
+      [self removeObserver:self forKeyPath: [@"card." stringByAppendingString:key]];
+    }
+  }
+  @catch (NSException * __unused exception) {}
+}
+
 @end
 
