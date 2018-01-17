@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// /c card.
 - (UIView *)createViewFor:(LTCard *)card withFrame:(CGRect)frame;
 
+/// Initializes a new game. Includes all the logic of initiali positioning of subvieews,
+/// subscriptions to KVO and etc.
 - (void)initGame;
 
 /// Refreshes cards grid. In set game this method removes matched cards from the display grid and

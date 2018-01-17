@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
   self.cardsDisplayGridHelper = [[LTGrid alloc] init];
   [self initGame];
   [self updateScore];
-
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object
@@ -158,6 +157,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (void) setCardDeckView {
+  if (self.cardDeckView) {
+    return;
+  }
   CGFloat cardDeckOriginX = self.gameBoardView.bounds.size.width / 2 - CARD_DECK_WIDTH / 2;
   CGFloat cardDeckOriginY = self.gameBoardView.bounds.size.height - CARD_DECK_HEIGHT - 5;
   auto cardDeckFrame = CGRectMake(cardDeckOriginX, cardDeckOriginY, CARD_DECK_WIDTH,
