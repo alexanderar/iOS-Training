@@ -20,9 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Game model.
 @property (readwrite, nonatomic) LTCardMatchingGame *game;
 
-/// View that displays a deck of cards.
-@property (nonatomic) UIImageView *cardDeckView;
-
 @end
 
 @implementation LTCardGameViewController
@@ -46,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
   LTCardView *cardView = (LTCardView *)card.view;
   [self.game chooseCard:cardView.card];
   [self updateScore];
-  [self refreshCardsGrid];
+  [self refreshCardsGridAnimated:YES withCompletion:nil];
 }
 
 - (void)viewDidLoad {
@@ -54,11 +51,29 @@ NS_ASSUME_NONNULL_BEGIN
   self.cardsDisplayGridHelper = [[LTGrid alloc] init];
   [self initGame];
   [self updateScore];
+
+}
+
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(nullable void *)context {
+  if ([keyPath isEqualToString:@"cards"]){
+    NSNumber *kind = change[NSKeyValueChangeKindKey];
+    if([kind integerValue] == (int)NSKeyValueChangeInsertion)
+    {
+      LTCard *newcard = [change objectForKey:NSKeyValueChangeNewKey][0];
+      [self refreshCardsGridAnimated:YES withCompletion:^{
+         [self dialCard:newcard withAnimationDelay:0.1];
+      }];
+    }
+  }
 }
 
 - (void)initGame {
+  if (self.game) {
+    [self.game removeObserverForGameCards:self];
+  }
   self.game = [self createGameWithCardCount:DEFAULT_CARD_COUNT];
-  [self updateScore];
   self.cardsContainerView.backgroundColor = nil;
   self.cardsContainerView.opaque = NO;
   self.cardsDisplayGridHelper.size = self.cardsContainerView.bounds.size;
@@ -67,22 +82,30 @@ NS_ASSUME_NONNULL_BEGIN
   self.gameBoardView.backgroundColor = nil;
   self.gameBoardView.opaque = NO;
   [self setCardDeckView];
+  [self updateScore];
   for (int i = 0; i< self.game.cardCount; ++i) {
     LTCard *card = [self.game cardAtIndex:i];
-    UIView *cardView = [self createViewFor:card withFrame:self.cardDeckView.frame];
-    [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
-        action:@selector(touchCard:)]];
-    [self.cardsContainerView addSubview:cardView];
-    CGRect frame = [self.cardsDisplayGridHelper
-                    frameOfCellAtRow:(i / self.cardsDisplayGridHelper.columnCount)                    
-                    inColumn:(i % self.cardsDisplayGridHelper.columnCount)];
-    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
-    curve:UIViewAnimationCurveEaseInOut animations:^{
-      cardView.frame = frame;
-    }];
-    [animator startAnimationAfterDelay:i * 0.1f];
-    [animator startAnimation];
+    [self dialCard:card withAnimationDelay:i * 0.1];
   }
+  [self.game registerObserverForGameCards:self];
+}
+
+- (void)dialCard:(LTCard *)card withAnimationDelay:(float)delay {
+  NSUInteger index = [self.cardsContainerView.subviews count];
+  UIView *cardView = [self createViewFor:card withFrame:self.cardDeckView.frame];
+  [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
+      action:@selector(touchCard:)]];
+  [self.cardsContainerView addSubview:cardView];
+  CGRect frame = [self.cardsDisplayGridHelper
+                  frameOfCellAtRow:(index / self.cardsDisplayGridHelper.columnCount)
+                  inColumn:(index % self.cardsDisplayGridHelper.columnCount)];
+
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
+        curve:UIViewAnimationCurveEaseInOut animations:^{
+          cardView.frame = frame;
+        }];
+    [animator startAnimationAfterDelay:delay];
+    [animator startAnimation];
 }
 
 - (IBAction)resetGame {
@@ -126,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
   return rotationAnimation;
 }
 
-- (void)refreshCardsGrid {
+- (void)refreshCardsGridAnimated:(BOOL)animated withCompletion:(nullable void (^)())callback {
 }
 
 #define CARD_DECK_HEIGHT 96.0
@@ -139,7 +162,6 @@ NS_ASSUME_NONNULL_BEGIN
   CGFloat cardDeckOriginY = self.gameBoardView.bounds.size.height - CARD_DECK_HEIGHT - 5;
   auto cardDeckFrame = CGRectMake(cardDeckOriginX, cardDeckOriginY, CARD_DECK_WIDTH,
                                   CARD_DECK_HEIGHT);
-  
   self.cardDeckView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardback"]];
   [self.cardDeckView setFrame:cardDeckFrame];
   [self.gameBoardView addSubview:self.cardDeckView];

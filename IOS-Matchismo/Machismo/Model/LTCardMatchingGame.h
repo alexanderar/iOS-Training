@@ -31,8 +31,15 @@ NS_ASSUME_NONNULL_BEGIN
 /// implemented in derived class.
 - (int)match:(NSArray *)cards;
 
+/// Adds /c numberOfCards to the current game and returns them in the array.
+- (NSArray *)addCardsToGame:(NSUInteger) numberOfCards;
+
 /// Resets the game
 - (BOOL)resetGame;
+
+- (void)registerObserverForGameCards:(id)observer;
+
+- (void)removeObserverForGameCards:(id)observer ;
 
 /// Number of chosen cards that's when reached should trigger a matching logic.
 @property (readonly, nonatomic) NSUInteger allowedNumberOfChosenCards;
@@ -46,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Number of cards that are used in current game.
 @property (readonly, nonatomic) NSUInteger cardCount;
+
+@property (readonly, nonatomic) NSArray *gameCards;
 
 @end
 

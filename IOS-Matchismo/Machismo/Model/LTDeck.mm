@@ -54,6 +54,10 @@ NS_ASSUME_NONNULL_BEGIN
   return [self.cards count] == 0;
 }
 
+- (NSUInteger)remainingCardsCount {
+  return [self.cards count];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

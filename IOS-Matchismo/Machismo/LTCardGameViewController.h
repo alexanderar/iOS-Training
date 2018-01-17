@@ -17,31 +17,39 @@ NS_ASSUME_NONNULL_BEGIN
 /// should derive from it.
 @interface LTCardGameViewController : UIViewController
 
-/// View that contains all the card views
-@property (weak, nonatomic) IBOutlet UIView *cardsContainerView;
-
-/// Game board view that serves as a master view for all the nested views used in the game
-@property (weak, nonatomic) IBOutlet UIView *gameBoardView;
-
-/// Grid helper that is used to allign card views on the screen based on /c cardsContainerView
-/// dimentions
-@property (nonatomic, strong) LTGrid *cardsDisplayGridHelper;
-
-/// Game model
-@property (readonly, nonatomic ) LTCardMatchingGame *game;
-
 /// Creates a new game with number of cards specified by \c count.
-/// Abstract
+/// Abstract.
 - (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count;
 
 /// Abstract method that is used to create a specific card view in a given /c frame for given
 /// /c card.
 - (UIView *)createViewFor:(LTCard *)card withFrame:(CGRect)frame;
 
+- (void)initGame;
+
+/// Refreshes cards grid. In set game this method removes matched cards from the display grid and
+/// ajusts remaining cards positions. Same ajustment is done when new cards are added to the grid.
+/// If /c callback is provided it is involked when repositioning is completed.
+- (void)refreshCardsGridAnimated:(BOOL)animated withCompletion:(nullable void (^)(void))callback;
+
 ///// Target action that is triggered when user tuches a card.
 - (void)touchCard:(UITapGestureRecognizer *) card;
 
-- (void)refreshCardsGrid;
+/// View that contains all the card views.
+@property (weak, nonatomic) IBOutlet UIView *cardsContainerView;
+
+/// View that displays a deck of cards.
+@property (nonatomic) UIImageView *cardDeckView;
+
+/// Game board view that serves as a master view for all the nested views used in the game.
+@property (weak, nonatomic) IBOutlet UIView *gameBoardView;
+
+/// Grid helper that is used to allign card views on the screen based on /c cardsContainerView
+/// dimentions.
+@property (nonatomic, strong) LTGrid *cardsDisplayGridHelper;
+
+/// Game model.
+@property (readonly, nonatomic ) LTCardMatchingGame *game;
 
 @end
 NS_ASSUME_NONNULL_END

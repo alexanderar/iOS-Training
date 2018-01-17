@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Indicates whether deck is empty.
 - (BOOL)isEmpty;
 
+@property (readonly)NSUInteger remainingCardsCount;
+
 @end
 
 NS_ASSUME_NONNULL_END

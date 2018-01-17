@@ -8,16 +8,20 @@
 
 #import "LTCardView.h"
 #import "LTCard.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation LTCardView
 
 @dynamic card;
+
 #define DEFAULT_CARD_CONTENT_SCALE_FACTOR 0.90
 
 @synthesize cardContentScaleFactor = _cardContentScaleFactor;
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
-                       context:(void *)context {
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSKeyValueChangeKey,id> *)change
+                       context:(nullable void *)context {
   if ([keyPath hasPrefix:NSStringFromSelector(@selector(card))]) {
     [self setNeedsDisplay];
   }
@@ -52,4 +56,6 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
 
