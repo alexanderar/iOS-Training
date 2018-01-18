@@ -24,6 +24,7 @@
 		3640BB221FFA33D7008D4892 /* LTPlayingCard.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB201FFA33D7008D4892 /* LTPlayingCard.mm */; };
 		3640BB251FFA348C008D4892 /* LTDeck.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3640BB231FFA348C008D4892 /* LTDeck.mm */; };
 		365E22B82007BCCB00FCE582 /* LTPlayingCardView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 365E22B72007BCCB00FCE582 /* LTPlayingCardView.mm */; };
+		365F804F2010DAE9004E7CC7 /* LTCardViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 365F804D2010DAE9004E7CC7 /* LTCardViewFactory.mm */; };
 		366A73A0200B5A6F007738DD /* LTCardView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 366A739F200B5A6F007738DD /* LTCardView.mm */; };
 		367A91AC1FFA5ACA0077179B /* LTPlayingCardDeck.mm in Sources */ = {isa = PBXBuildFile; fileRef = 367A91AA1FFA5ACA0077179B /* LTPlayingCardDeck.mm */; };
 		36C2DA452007CF4800A2FCC9 /* LTGrid.mm in Sources */ = {isa = PBXBuildFile; fileRef = 36C2DA442007CF4800A2FCC9 /* LTGrid.mm */; };
@@ -65,6 +66,8 @@
 		3640BB241FFA348C008D4892 /* LTDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTDeck.h; sourceTree = "<group>"; };
 		365E22B52007A24B00FCE582 /* LTPlayingCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPlayingCardView.h; sourceTree = "<group>"; };
 		365E22B72007BCCB00FCE582 /* LTPlayingCardView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LTPlayingCardView.mm; sourceTree = "<group>"; };
+		365F804D2010DAE9004E7CC7 /* LTCardViewFactory.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTCardViewFactory.mm; sourceTree = "<group>"; };
+		365F804E2010DAE9004E7CC7 /* LTCardViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCardViewFactory.h; sourceTree = "<group>"; };
 		366A739E200B3625007738DD /* LTCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCardView.h; sourceTree = "<group>"; };
 		366A739F200B5A6F007738DD /* LTCardView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTCardView.mm; sourceTree = "<group>"; };
 		367A91AA1FFA5ACA0077179B /* LTPlayingCardDeck.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = LTPlayingCardDeck.mm; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				3609BABC1FFA138700AA109E /* LTCardGameViewController.mm */,
 				366A739E200B3625007738DD /* LTCardView.h */,
 				366A739F200B5A6F007738DD /* LTCardView.mm */,
+				365F804E2010DAE9004E7CC7 /* LTCardViewFactory.h */,
+				365F804D2010DAE9004E7CC7 /* LTCardViewFactory.mm */,
 				36C2DA432007CF4800A2FCC9 /* LTGrid.h */,
 				36C2DA442007CF4800A2FCC9 /* LTGrid.mm */,
 				361C19DC2003518C00CA87AF /* LTPlayingCardGameViewController.h */,
@@ -257,6 +262,7 @@
 				3609BAC81FFA138700AA109E /* main.m in Sources */,
 				362AE437200CF6C900FE37DE /* LTSetCardView.mm in Sources */,
 				36D6066F2003A61000F910C6 /* LTSetCardMatchingGame.mm in Sources */,
+				365F804F2010DAE9004E7CC7 /* LTCardViewFactory.mm in Sources */,
 				361C19D7200222C600CA87AF /* LTSetCard.mm in Sources */,
 				3609BABA1FFA138700AA109E /* LTCardGameAppDelegate.mm in Sources */,
 			);

@@ -13,24 +13,28 @@
 #import "LTGrid.h"
 #import "LTCardView.h"
 #import "UIKit/UIKit.h"
+#import "LTCardViewFactory.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCardGameViewController ()
 
 /// Game model.
 @property (readwrite, nonatomic) LTCardMatchingGame *game;
+@property (nonatomic) BOOL viewAppeared;
 
 @end
 
 @implementation LTCardGameViewController
 
+# pragma mark -
+# pragma mark - Abstract methods
+# pragma mark -
+
 /// Abstract
 - (LTCardMatchingGame *)createGame{
   [NSException raise:@"NSGenericException" format:@"Method not implemented"];
   return [[LTCardMatchingGame alloc] initWithCardCount:0 usingDeck: [[LTDeck alloc] init]];
-}
-- (UIView *)createViewFor:(LTCard *)card withFrame:(CGRect)frame {
-  return  nil;
 }
 
 - (void)updateScore{
@@ -41,14 +45,21 @@ NS_ASSUME_NONNULL_BEGIN
   LTCardView *cardView = (LTCardView *)card.view;
   [self.game chooseCard:cardView.card];
   [self updateScore];
-  [self refreshCardsGridAnimated:YES withCompletion:nil];
+  [self refreshCardsGridAnimated:YES];
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
-  self.cardsDisplayGridHelper = [[LTGrid alloc] init];
-  [self initGame];
-  [self updateScore];
+-(void)viewDidLoad {
+  [self.cardDeckView setImage:[UIImage imageNamed:@"cardback"]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  if (!self.viewAppeared) {
+    self.cardsDisplayGridHelper = [[LTGrid alloc] init];
+    [self initGame];
+    [self updateScore];
+    self.viewAppeared = YES;
+  }
 }
 
 - (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object
@@ -59,11 +70,14 @@ NS_ASSUME_NONNULL_BEGIN
     if([kind integerValue] == (int)NSKeyValueChangeInsertion)
     {
       LTCard *newcard = [change objectForKey:NSKeyValueChangeNewKey][0];
-      [self refreshCardsGridAnimated:YES withCompletion:^{
-         [self dialCard:newcard withAnimationDelay:0.1];
-      }];
+      [self dialCard:newcard withAnimationDelay:0.1];
+      [self refreshCardsGridAnimated:YES];
     }
   }
+}
+
+- (void)viewDidLayoutSubviews {
+  [self refreshCardsGridAnimated:YES];
 }
 
 - (void)initGame {
@@ -76,9 +90,6 @@ NS_ASSUME_NONNULL_BEGIN
   self.cardsDisplayGridHelper.size = self.cardsContainerView.bounds.size;
   self.cardsDisplayGridHelper.cellAspectRatio = (CGFloat)0.66;
   self.cardsDisplayGridHelper.minimumNumberOfCells = self.game.cardCount;
-  self.gameBoardView.backgroundColor = nil;
-  self.gameBoardView.opaque = NO;
-  [self setCardDeckView];
   [self updateScore];
   for (int i = 0; i< self.game.cardCount; ++i) {
     LTCard *card = [self.game cardAtIndex:i];
@@ -89,7 +100,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dialCard:(LTCard *)card withAnimationDelay:(float)delay {
   NSUInteger index = [self.cardsContainerView.subviews count];
-  UIView *cardView = [self createViewFor:card withFrame:self.cardDeckView.frame];
+  CGFloat originX = self.cardDeckView.frame.origin.x + self.cardDeckView.frame.size.width / 2;
+  CGFloat originY = self.cardDeckView.frame.origin.y;
+  UIView *cardView = [LTCardViewFactory createViewForCard:card
+                                                withFrame: CGRectMake(originX, originY, 0, 0)];
   [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
       action:@selector(touchCard:)]];
   [self.cardsContainerView addSubview:cardView];
@@ -146,25 +160,35 @@ NS_ASSUME_NONNULL_BEGIN
   return rotationAnimation;
 }
 
-- (void)refreshCardsGridAnimated:(BOOL)animated withCompletion:(nullable void (^)())callback {
-}
-
-#define CARD_DECK_HEIGHT 96.0
-#define CARD_DECK_WIDTH 64.0
-#define GAME_BOARD_BOTTOM_MARGIN 5.0
-
-
-- (void) setCardDeckView {
-  if (self.cardDeckView) {
-    return;
+- (void)refreshCardsGridAnimated:(BOOL)animated {
+  self.cardsDisplayGridHelper.size = self.cardsContainerView.bounds.size;
+  self.cardsDisplayGridHelper.minimumNumberOfCells = [self.cardsContainerView.subviews count];
+  __weak LTCardGameViewController *weakSelf = self;
+  void (^refreshCardsBlock)(void) = ^{
+    for (int i = 0; i < weakSelf.cardsContainerView.subviews.count; ++i) {
+      LTCardView *cardView = (LTCardView *)weakSelf.cardsContainerView.subviews[i];
+      CGRect frame = [weakSelf.cardsDisplayGridHelper
+                      frameOfCellAtRow:(i / weakSelf.cardsDisplayGridHelper.columnCount)
+                      inColumn:(i % weakSelf.cardsDisplayGridHelper.columnCount)];
+      float sigma = 0.00001;
+      if (abs(cardView.frame.size.width - frame.size.width) > sigma
+          || abs(cardView.frame.size.height - frame.size.height) > sigma
+          || abs(cardView.frame.origin.x - frame.origin.x) > sigma
+          || abs(cardView.frame.origin.y - frame.origin.y) > sigma) {
+        
+        cardView.frame = frame;
+        [cardView setNeedsDisplay];
+      }
+    }
+  };
+  if (animated) {
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.2f
+        curve:UIViewAnimationCurveEaseInOut animations:refreshCardsBlock];
+    [animator startAnimation];
   }
-  CGFloat cardDeckOriginX = self.gameBoardView.bounds.size.width / 2 - CARD_DECK_WIDTH / 2;
-  CGFloat cardDeckOriginY = self.gameBoardView.bounds.size.height - CARD_DECK_HEIGHT - 5;
-  auto cardDeckFrame = CGRectMake(cardDeckOriginX, cardDeckOriginY, CARD_DECK_WIDTH,
-                                  CARD_DECK_HEIGHT);
-  self.cardDeckView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardback"]];
-  [self.cardDeckView setFrame:cardDeckFrame];
-  [self.gameBoardView addSubview:self.cardDeckView];
+  else {
+    refreshCardsBlock();
+  }
 }
 
 @end

@@ -21,10 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Abstract.
 - (LTCardMatchingGame *)createGame;
 
-/// Abstract method that is used to create a specific card view in a given /c frame for given
-/// /c card.
-- (UIView *)createViewFor:(LTCard *)card withFrame:(CGRect)frame;
-
 /// Initializes a new game. Includes all the logic of initiali positioning of subvieews,
 /// subscriptions to KVO and etc.
 - (void)initGame;
@@ -32,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Refreshes cards grid. In set game this method removes matched cards from the display grid and
 /// ajusts remaining cards positions. Same ajustment is done when new cards are added to the grid.
 /// If /c callback is provided it is involked when repositioning is completed.
-- (void)refreshCardsGridAnimated:(BOOL)animated withCompletion:(nullable void (^)(void))callback;
+- (void)refreshCardsGridAnimated:(BOOL)animated;
 
 ///// Target action that is triggered when user tuches a card.
 - (void)touchCard:(UITapGestureRecognizer *) card;
@@ -41,10 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *cardsContainerView;
 
 /// View that displays a deck of cards.
-@property (nonatomic) UIImageView *cardDeckView;
-
-/// Game board view that serves as a master view for all the nested views used in the game.
-@property (weak, nonatomic) IBOutlet UIView *gameBoardView;
+@property (nonatomic) IBOutlet UIImageView *cardDeckView;
 
 /// Grid helper that is used to allign card views on the screen based on /c cardsContainerView
 /// dimentions.

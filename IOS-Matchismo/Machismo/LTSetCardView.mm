@@ -8,7 +8,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTSetCardView
 
-@synthesize card = _card;
+# pragma mark -
+# pragma mark - Draw
+# pragma mark -
 
 #define CORNER_FONT_STANDARD_HEIGHT 180.0
 #define CORNER_RADIUS 12.0
@@ -80,6 +82,11 @@ NS_ASSUME_NONNULL_BEGIN
   [self fillPath:path inFrame:frame withColor:shapeColor];
 }
 
+# pragma mark -
+# pragma mark - Shape
+# pragma mark -
+
+
 #define OVAL_WIDTH_RATIO 	0.12
 #define OVAL_HEIGTH_RATIO 0.4
 
@@ -103,7 +110,6 @@ NS_ASSUME_NONNULL_BEGIN
   return path;
 }
 
-
 #define SQUIGGLE_WIDTH 0.12
 #define SQUIGGLE_HEIGHT 0.3
 #define SQUIGGLE_FACTOR 0.5
@@ -126,6 +132,10 @@ NS_ASSUME_NONNULL_BEGIN
                                     ( 1 + SQUIGGLE_FACTOR))];
   return path;
 }
+
+# pragma mark -
+# pragma mark - Shade
+# pragma mark -
 
 #define STRIPE_FREEQUENCY_FACTOR 12
 #define STRIPES_OFFSET 0.06
@@ -163,6 +173,26 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
+# pragma mark -
+# pragma mark - Class methods
+# pragma mark -
+
++ (UIColor *)colorFromHexString:(NSString *)hexString {
+  unsigned rgbValue = 0;
+  NSScanner *scanner = [NSScanner scannerWithString:hexString];
+  [scanner setScanLocation:1]; // bypass '#' character
+  [scanner scanHexInt:&rgbValue];
+  return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16) / 255.0
+                         green:((rgbValue & 0xFF00) >> 8) / 255.0
+                          blue:(rgbValue & 0xFF) / 255.0 alpha:1.0];
+}
+
+# pragma mark -
+# pragma mark - Properties
+# pragma mark -
+
+@synthesize card = _card;
+
 - (LTSetCard *)gameCard {
   return (LTSetCard *)self.card;
 }
@@ -174,15 +204,11 @@ NS_ASSUME_NONNULL_BEGIN
     [self setNeedsDisplay];
   }
 }
-+ (UIColor *)colorFromHexString:(NSString *)hexString {
-  unsigned rgbValue = 0;
-  NSScanner *scanner = [NSScanner scannerWithString:hexString];
-  [scanner setScanLocation:1]; // bypass '#' character
-  [scanner scanHexInt:&rgbValue];
-  return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16) / 255.0
-                         green:((rgbValue & 0xFF00) >> 8) / 255.0
-                          blue:(rgbValue & 0xFF) / 255.0 alpha:1.0];
-}
+
+# pragma mark -
+# pragma mark - Initialization
+# pragma mark -
+
 
 - (void)setup {
   [super setup];

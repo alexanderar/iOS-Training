@@ -14,13 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
   return [[LTPlayCardMatchingGame alloc] init];
 }
 
-- (UIView *)createViewFor:(LTPlayingCard *)card withFrame:(CGRect)frame {
-  auto cardView = [[LTPlayingCardView alloc]initWithFrame:frame];
-  cardView.card = card;
-  return cardView;
-}
-
-
 @end
 
 NS_ASSUME_NONNULL_END
