@@ -10,8 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTPlayingCardGameViewController
 
-- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
-  return [[LTPlayCardMatchingGame alloc]initWithCardCount:count];
+- (LTCardMatchingGame *)createGame{
+  return [[LTPlayCardMatchingGame alloc] init];
 }
 
 - (UIView *)createViewFor:(LTPlayingCard *)card withFrame:(CGRect)frame {

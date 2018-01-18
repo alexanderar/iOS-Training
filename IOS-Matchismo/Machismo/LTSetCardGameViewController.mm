@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTSetCardGameViewController
 
-- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger)count{
-  return [[LTSetCardMatchingGame alloc] initWithCardCount:count];
+- (LTCardMatchingGame *)createGame {
+  return [[LTSetCardMatchingGame alloc] init];
 }
 
 - (UIView *)createViewFor:(LTSetCard *)card withFrame:(CGRect)frame {

@@ -9,9 +9,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTPlayCardMatchingGame
 
--(instancetype)initWithCardCount:(NSUInteger)count {
+#define INITIAL_CARD_COUNT 30
 
-  if(self = [super initWithCardCount:count usingDeck: [[LTPlayingCardDeck alloc] init]])
+-(instancetype)init{
+
+  if(self = [super initWithCardCount:INITIAL_CARD_COUNT
+                           usingDeck: [[LTPlayingCardDeck alloc] init]])
   {
     return self;
   }

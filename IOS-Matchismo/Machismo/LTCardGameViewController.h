@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Creates a new game with number of cards specified by \c count.
 /// Abstract.
-- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count;
+- (LTCardMatchingGame *)createGame;
 
 /// Abstract method that is used to create a specific card view in a given /c frame for given
 /// /c card.

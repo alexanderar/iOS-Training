@@ -24,10 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation LTCardGameViewController
 
-#define DEFAULT_CARD_COUNT 30
-
 /// Abstract
-- (LTCardMatchingGame *)createGameWithCardCount:(NSUInteger) count {
+- (LTCardMatchingGame *)createGame{
   [NSException raise:@"NSGenericException" format:@"Method not implemented"];
   return [[LTCardMatchingGame alloc] initWithCardCount:0 usingDeck: [[LTDeck alloc] init]];
 }
@@ -72,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
   if (self.game) {
     [self.game removeObserverForGameCards:self];
   }
-  self.game = [self createGameWithCardCount:DEFAULT_CARD_COUNT];
+  self.game = [self createGame];
   self.cardsContainerView.backgroundColor = nil;
   self.cardsContainerView.opaque = NO;
   self.cardsDisplayGridHelper.size = self.cardsContainerView.bounds.size;
