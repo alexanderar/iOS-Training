@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// chosen cards that is configured for the game, matchisng logic is triggerd.
 - (void)chooseCardAtIndex:(NSUInteger)index;
 
+/// Chooses a given /c card. Once number of chosen cards reaches an allowed number of chosen cards
+/// that is configured for the game, matchisng logic is triggerd.
 - (void)chooseCard:(LTCard *)card;
 
 /// Creates a deck of cards. Abstract method that should be implemented in derived class.
@@ -34,26 +36,25 @@ NS_ASSUME_NONNULL_BEGIN
 /// Adds /c numberOfCards to the current game and returns them in the array.
 - (NSArray *)addCardsToGame:(NSUInteger) numberOfCards;
 
-/// Resets the game
+/// Resets the game by reseting the score to 0, and redialing new set of cards by using new deck.
 - (BOOL)resetGame;
 
+/// Registers the given /c observer to be notified on changes in cards property.
 - (void)registerObserverForGameCards:(id)observer;
 
+/// Removes the given /c observer from listening on cards property.
 - (void)removeObserverForGameCards:(id)observer ;
 
 /// Number of chosen cards that's when reached should trigger a matching logic.
 @property (readonly, nonatomic) NSUInteger allowedNumberOfChosenCards;
 
-/// Current game score
+/// Current game score.
 @property (readonly, nonatomic) NSInteger score;
-
-/// Game history - contains all the choises and matching result that were performed through the game
-/// since reset.
-@property (readonly, nonatomic) NSArray<LTGameIterationResult *> *history;
 
 /// Number of cards that are used in current game.
 @property (readonly, nonatomic) NSUInteger cardCount;
 
+/// Array of cards that are currently used in game.
 @property (readonly, nonatomic) NSArray *gameCards;
 
 @end

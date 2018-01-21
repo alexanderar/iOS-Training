@@ -33,17 +33,25 @@ NS_ASSUME_NONNULL_BEGIN
   NSArray *addedCards = [self.game addCardsToGame:NUMBER_OF_ADDITIONAL_CARDS_TO_ADD];
   if ([addedCards count] < NUMBER_OF_ADDITIONAL_CARDS_TO_ADD)
   {
-    self.cardDeckView.userInteractionEnabled = NO;
-    self.cardDeckView.alpha = 0.7f;
+    [self disableCardDeck];
   }
 }
 
 - (void)initGame {
   [super initGame];
+  [self enableCardDeck];
+}
+
+- (void)enableCardDeck {
   self.cardDeckView.userInteractionEnabled = YES;
   self.cardDeckView.alpha = 1;
   [self.cardDeckView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
       action:@selector(requestAdditionalCards:)]];
+}
+
+- (void)disableCardDeck {
+  self.cardDeckView.userInteractionEnabled = NO;
+  self.cardDeckView.alpha = 0.7f;
 }
 
 @end
