@@ -12,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *contents;
 
 /// Property that indicates whether the card is chosen or not.
-@property (nonatomic, getter=isChosen) BOOL chosen;
+@property (nonatomic) BOOL chosen;
 
 /// Property that indicates whether the card is already matched or not.
-@property (nonatomic, getter=isMatched) BOOL matched;
+@property (nonatomic) BOOL matched;
 
 @end
 

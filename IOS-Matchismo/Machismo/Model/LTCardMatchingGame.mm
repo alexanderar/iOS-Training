@@ -95,10 +95,10 @@ static const int COST_TO_CHOOSE = 1;
 
 -(void)chooseCard:(LTCard *)chosenCard {
   int scoreChange = 0;
-  if(chosenCard.isMatched) {
+  if(chosenCard.matched) {
     return;
   }
-  if (chosenCard.isChosen) {
+  if (chosenCard.chosen) {
     chosenCard.chosen = NO;
     [self.chosenCards removeObject:chosenCard];
   } else {

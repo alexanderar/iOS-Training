@@ -3,12 +3,13 @@
 
 #import "UIKit/UIKit.h"
 #import "LTCardView.h"
+#import "LTCardObserverProtocol.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @class LTSetCard;
 
 /// View that displays set card
-@interface LTSetCardView : LTCardView
+@interface LTSetCardView : LTCardView <LTCardObserverProtocol>
 
 /// Set card that is used as a model for this view
 @property (readonly, nonatomic) LTSetCard *gameCard;

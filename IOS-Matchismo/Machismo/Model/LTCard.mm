@@ -10,19 +10,12 @@ NS_ASSUME_NONNULL_BEGIN
 static NSSet* _keyPathsForValuesAffectingCard = nil;
 
 + (NSSet *)keyPathsForValuesAffectingCard {
-
   if(!_keyPathsForValuesAffectingCard)
   {
      _keyPathsForValuesAffectingCard = [NSSet setWithObjects:@"chosen", @"matched", nil];
   }
   return _keyPathsForValuesAffectingCard;
 }
-
-//- (void)setChosen:(BOOL)chosen{
-//  _chosen = chosen;
-//}
-
-
 
 @end
 

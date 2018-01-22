@@ -31,11 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
   UIRectFill(self.bounds);
   
   [self drawShapes];
-  if (self.card.isMatched)
+  if (self.card.matched)
   {
     return;
   }
-  if (self.card.isChosen) {
+  if (self.card.chosen) {
     self.alpha = 0.6f;
     [[UIColor blueColor] setStroke];
     roundedRect.lineWidth = roundedRect.lineWidth * 2;
@@ -226,6 +226,19 @@ NS_ASSUME_NONNULL_BEGIN
   self = [super initWithFrame:frame];
   [self setup];
   return self;
+}
+
+# pragma mark -
+# pragma mark - LTCardObserverProtocol implementation
+# pragma mark -
+
+
+- (void)onCardChosenStatusChanged:(LTCard *)card {
+  [self setNeedsDisplay];
+}
+
+- (void)onCardMtchedStatusChanged:(LTCard *)card {
+  [self setNeedsDisplay];
 }
 
 @end

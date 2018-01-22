@@ -40,6 +40,20 @@
 }
 
 # pragma mark -
+# pragma mark - LTCardObserverProtocol implementation
+# pragma mark -
+
+- (void) onCardChosenStatusChanged:(LTCard *)card {
+  self.drawWithAnimation = YES;
+  [self setNeedsDisplay];
+}
+
+- (void) onCardMtchedStatusChanged:(LTCard *)card {
+  self.drawWithAnimation = YES;
+   [self setNeedsDisplay];
+}
+
+# pragma mark -
 # pragma mark - Drawing
 # pragma mark -
 
@@ -62,35 +76,48 @@
   
   [[UIColor blackColor] setStroke];
   [roundedRect stroke];
-  
-  if (self.card.isChosen) {
-    [UIView transitionWithView:self duration:0.5
-                       options:UIViewAnimationOptionTransitionFlipFromRight animations:^{
-                         auto faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",
-                             [self rankAsString], self.playingCard.suit]];
-                         if (faceImage) {
-                           CGRect imageRect = CGRectInset(self.bounds,
-                               self.bounds.size.width * (1.0-self.cardContentScaleFactor),
-                               self.bounds.size.height * (1.0-self.cardContentScaleFactor));
-                           [faceImage drawInRect:imageRect];
-                         } else {
-                           [self drawPips];
-                         }
-                         [self drawCorners];
-                       } completion:nil];
-    
+   __weak LTPlayingCardView *weakSelf = self;
+  if (self.card.chosen) {
+    void (^drawFront)(void) = ^{
+      auto faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",
+                                            [weakSelf rankAsString], weakSelf.playingCard.suit]];
+      if (faceImage) {
+        CGRect imageRect = CGRectInset(weakSelf.bounds,
+            weakSelf.bounds.size.width * (1.0-weakSelf.cardContentScaleFactor),
+            weakSelf.bounds.size.height * (1.0-weakSelf.cardContentScaleFactor));
+        [faceImage drawInRect:imageRect];
+      } else {
+        [self drawPips];
+      }
+      [self drawCorners];
+    };
+    if(self.drawWithAnimation) {
+      [UIView transitionWithView:self duration:0.5
+          options:UIViewAnimationOptionTransitionFlipFromRight animations:drawFront completion:nil];
+      self.drawWithAnimation = NO;
+    }
+    else {
+      drawFront();
+    }
   } else {
-    [UIView transitionWithView:self duration:0.5
-                       options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
-                         [[UIImage imageNamed:@"cardback"] drawInRect:self.bounds];
-                       } completion:nil];
-    
+    void (^drawBack)(void) = ^{
+      [[UIImage imageNamed:@"cardback"] drawInRect:weakSelf.bounds];
+    };
+    if(self.drawWithAnimation) {
+      [UIView transitionWithView:self duration:0.5
+          options:UIViewAnimationOptionTransitionFlipFromLeft animations:drawBack completion:nil];
+      self.drawWithAnimation = NO;
+    }
+    else {
+      drawBack();
+    }
   }
-  if (self.card.isMatched) {
+  if (self.card.matched) {
     self.userInteractionEnabled = NO;
     self.alpha = 0.6f;
   }
 }
+
 
 - (void)pushContextAndRotateUpsideDown {
   CGContextRef context = UIGraphicsGetCurrentContext();

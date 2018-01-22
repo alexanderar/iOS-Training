@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL viewAppeared;
 
 @property (nonatomic) BOOL cardsGathered;
+
+@property (nonatomic) CGPoint cardsPileCenterLocation;
 @end
 
 @implementation LTCardGameViewController
@@ -53,23 +55,43 @@ NS_ASSUME_NONNULL_BEGIN
     LTCardView *cardView = (LTCardView *)card.view;
     [self.game chooseCard:cardView.card];
     [self updateScore];
+    [self refreshCardsGridAnimated:YES];
+  } else {
+    [self rearangeCardsFromPile];
+
   }
-  self.cardsGathered = NO;
-  [self refreshCardsGridAnimated:YES];
 }
 
 - (void)moveCardsPileViaPanGesture:(UIPanGestureRecognizer *)panGesture {
   if (!self.cardsGathered) {
     return;
   }
-  if(panGesture.state == UIGestureRecognizerStateBegan || panGesture.state ==
+  if(panGesture.state ==
      UIGestureRecognizerStateChanged) {
-    CGPoint newLocation = [panGesture translationInView:self.cardsContainerView];
-    for (LTCardView *cardView in self.cardsContainerView.subviews) {
-      auto transform = CGAffineTransformTranslate(cardView.transform, newLocation.x, newLocation.y);
-      cardView.transform = transform;
-    }
+    [self moveCardsPileToPoint:[panGesture translationInView:self.cardsContainerView.superview]];
   }
+}
+
+- (void)rearangeCardsFromPile {
+  self.cardsGathered = NO;
+  [self resetCardsPileCenter];
+  [self refreshCardsGridAnimated:YES];
+}
+
+- (void)resetCardsPileCenter {
+  self.cardsPileCenterLocation = CGPointMake(self.cardsContainerView.bounds.size.width / 2,
+                                             self.cardsContainerView.bounds.size.height / 2);
+}
+
+- (void)moveCardsPileToPoint:(CGPoint)point {
+  for (LTCardView *cardView in self.cardsContainerView.subviews){
+//    CGFloat xDistanceFormPileCenter = self.cardsPileCenterLocation.x - cardView.frame.origin.x;
+//    CGFloat yDistanceFormPileCenter = self.cardsPileCenterLocation.y - cardView.frame.origin.y;
+//    [cardView setFrame:CGRectMake(point.x + xDistanceFormPileCenter, point.y +
+//        yDistanceFormPileCenter, cardView.frame.size.width, cardView.frame.size.height)];
+    cardView.center	 = CGPointMake(cardView.center.x + point.x, cardView.center.y + point.y);
+  }
+  self.cardsPileCenterLocation = point;
 }
 
 - (void)gatherCardsViaPinchGesture:(UIPinchGestureRecognizer *)pinchGesture {
@@ -82,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
         CGFloat cardsContainerViewCenterX = self.cardsContainerView.bounds.size.width / 2 -
             cardView.bounds.size.width / 2;
         CGFloat cardsContainerViewCenterY = self.cardsContainerView.bounds.size.height / 2 -
-        cardView.bounds.size.height / 2;
+            cardView.bounds.size.height / 2;
         CGFloat cardOriginX = cardView.frame.origin.x;
         CGFloat cardOriginY = cardView.frame.origin.y;
         CGFloat transformX, transformY;
@@ -113,8 +135,12 @@ NS_ASSUME_NONNULL_BEGIN
   [self.cardDeckView setImage:[UIImage imageNamed:@"cardback"]];
   [self.cardsContainerView addGestureRecognizer:[[UIPinchGestureRecognizer alloc]
       initWithTarget:self action:@selector(gatherCardsViaPinchGesture:)]];
-  [self.cardsContainerView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self
-      action:@selector(moveCardsPileViaPanGesture:)]];
+  auto panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
+      action:@selector(moveCardsPileViaPanGesture:)];
+  panRecognizer.minimumNumberOfTouches = 1;
+  panRecognizer.maximumNumberOfTouches = 1;
+  [self resetCardsPileCenter];
+  [self.cardsContainerView addGestureRecognizer:panRecognizer];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -170,7 +196,7 @@ NS_ASSUME_NONNULL_BEGIN
   UIView *cardView = [LTCardViewFactory createViewForCard:card
                                                 withFrame: CGRectMake(originX, originY, 0, 0)];
   [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                         action:@selector(touchCard:)]];
+      action:@selector(touchCard:)]];
   [self.cardsContainerView addSubview:cardView];
   CGRect frame = [self.cardsDisplayGridHelper
                   frameOfCellAtRow:(index / self.cardsDisplayGridHelper.columnCount)
@@ -186,6 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)resetGame {
   __weak LTCardGameViewController *weakSelf = self;
+  [self rearangeCardsFromPile];
   CABasicAnimation *rotationAnimation = [LTCardGameViewController rotationAnimationBy:360];
   CGFloat radius = MAX(self.cardsContainerView.bounds.size.width,
                        self.cardsContainerView.bounds.size.height);
@@ -222,7 +249,7 @@ NS_ASSUME_NONNULL_BEGIN
         [cardView setFrame:frame];
         [cardView setNeedsDisplay];
       }
-    } 
+    }
   };
   if (animated) {
     UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.2f
@@ -241,9 +268,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)viewPositionAndSizeAreTheSame:(UIView *)view asFrame:(CGRect)frame {
   float sigma = 0.000001;
   return abs(view.bounds.size.width - frame.size.width) <= sigma
-      || abs(view.bounds.size.height - frame.size.height) <= sigma
-      || abs(view.frame.origin.x - frame.origin.x) <= sigma
-      || abs(view.frame.origin.y - frame.origin.y) <= sigma;
+      && abs(view.bounds.size.height - frame.size.height) <= sigma
+      && abs(view.frame.origin.x - frame.origin.x) <= sigma
+      && abs(view.frame.origin.y - frame.origin.y) <= sigma;
 }
 
 + (CGFloat)degreeToRadConvert:(CGFloat)degree {

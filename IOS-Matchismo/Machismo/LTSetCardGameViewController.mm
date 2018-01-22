@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSMutableArray *viewsToRemove = [[NSMutableArray alloc] init];
   for (int i = 0; i < self.cardsContainerView.subviews.count; ++i) {
     LTCardView *cardView = (LTCardView *)self.cardsContainerView.subviews[i];
-    if(cardView.card.isMatched) {
+    if(cardView.card.matched) {
       [viewsToRemove addObject:cardView];
     }
   }
