@@ -22,11 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// Game model.
 @property (readwrite, nonatomic) LTCardMatchingGame *game;
 
+/// Flag that indicates wearher the view already appeared once or not. This flag is used to ensure
+/// that some logics executes only once inside /c viewDidAppear method.
 @property (nonatomic) BOOL viewAppeared;
 
+/// Prperty that indicates whether the cards have been gathered into a pile via pinch gesture.
 @property (nonatomic) BOOL cardsGathered;
 
-@property (nonatomic) CGPoint cardsPileCenterLocation;
 @end
 
 @implementation LTCardGameViewController
@@ -66,32 +68,23 @@ NS_ASSUME_NONNULL_BEGIN
   if (!self.cardsGathered) {
     return;
   }
-  if(panGesture.state ==
-     UIGestureRecognizerStateChanged) {
-    [self moveCardsPileToPoint:[panGesture translationInView:self.cardsContainerView.superview]];
+  if (panGesture.state == UIGestureRecognizerStateChanged) {
+    CGPoint translationPoint = [panGesture translationInView:self.cardsContainerView];
+    [self moveCardsPileToPoint:translationPoint];
+    [panGesture setTranslation:CGPointMake(0, 0) inView:self.cardsContainerView];
   }
 }
 
 - (void)rearangeCardsFromPile {
   self.cardsGathered = NO;
-  [self resetCardsPileCenter];
   [self refreshCardsGridAnimated:YES];
 }
 
-- (void)resetCardsPileCenter {
-  self.cardsPileCenterLocation = CGPointMake(self.cardsContainerView.bounds.size.width / 2,
-                                             self.cardsContainerView.bounds.size.height / 2);
-}
 
 - (void)moveCardsPileToPoint:(CGPoint)point {
   for (LTCardView *cardView in self.cardsContainerView.subviews){
-//    CGFloat xDistanceFormPileCenter = self.cardsPileCenterLocation.x - cardView.frame.origin.x;
-//    CGFloat yDistanceFormPileCenter = self.cardsPileCenterLocation.y - cardView.frame.origin.y;
-//    [cardView setFrame:CGRectMake(point.x + xDistanceFormPileCenter, point.y +
-//        yDistanceFormPileCenter, cardView.frame.size.width, cardView.frame.size.height)];
     cardView.center	 = CGPointMake(cardView.center.x + point.x, cardView.center.y + point.y);
   }
-  self.cardsPileCenterLocation = point;
 }
 
 - (void)gatherCardsViaPinchGesture:(UIPinchGestureRecognizer *)pinchGesture {
@@ -139,7 +132,6 @@ NS_ASSUME_NONNULL_BEGIN
       action:@selector(moveCardsPileViaPanGesture:)];
   panRecognizer.minimumNumberOfTouches = 1;
   panRecognizer.maximumNumberOfTouches = 1;
-  [self resetCardsPileCenter];
   [self.cardsContainerView addGestureRecognizer:panRecognizer];
 }
 

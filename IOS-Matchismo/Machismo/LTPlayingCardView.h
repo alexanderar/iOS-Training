@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Playing card that serves as a model for this view
 @property (readonly, nonatomic) LTPlayingCard *playingCard;
 
+/// Flag that indicates whether this view should be animated next time when /c drawRect method is
+/// executed.
 @property (nonatomic) BOOL drawWithAnimation;
 
 @end
