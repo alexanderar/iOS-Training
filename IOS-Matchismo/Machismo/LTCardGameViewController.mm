@@ -21,8 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Game model.
 @property (readwrite, nonatomic) LTCardMatchingGame *game;
+
 @property (nonatomic) BOOL viewAppeared;
 
+@property (nonatomic) BOOL cardsGathered;
 @end
 
 @implementation LTCardGameViewController
@@ -42,14 +44,20 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)touchCard:(UITapGestureRecognizer *) card {
-  LTCardView *cardView = (LTCardView *)card.view;
-  [self.game chooseCard:cardView.card];
-  [self updateScore];
+  if(!self.cardsGathered)
+  {
+    LTCardView *cardView = (LTCardView *)card.view;
+    [self.game chooseCard:cardView.card];
+    [self updateScore];
+  }
+  self.cardsGathered = NO;
   [self refreshCardsGridAnimated:YES];
 }
 
 -(void)viewDidLoad {
   [self.cardDeckView setImage:[UIImage imageNamed:@"cardback"]];
+  [self.cardsContainerView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self
+      action:@selector(gatherCardsViaPinchGesture:)]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,6 +80,39 @@ NS_ASSUME_NONNULL_BEGIN
       LTCard *newcard = [change objectForKey:NSKeyValueChangeNewKey][0];
       [self dialCard:newcard withAnimationDelay:0.1];
       [self refreshCardsGridAnimated:YES];
+    }
+  }
+}
+
+- (void)gatherCardsViaPinchGesture:(UIPinchGestureRecognizer *)pinchGesture {
+  if (pinchGesture.state == UIGestureRecognizerStateBegan || pinchGesture.state
+      == UIGestureRecognizerStateChanged) {
+    CGFloat scale = [pinchGesture scale];
+    if(scale < 1) {
+      self.cardsGathered = YES;
+      for (LTCardView *cardView in self.cardsContainerView.subviews) {
+        CGFloat cardsContainerViewCenterX = self.cardsContainerView.bounds.size.width / 2 -
+            cardView.bounds.size.width / 2;
+        CGFloat cardsContainerViewCenterY = self.cardsContainerView.bounds.size.height / 2 -
+        cardView.bounds.size.height / 2;
+        CGFloat cardOriginX = cardView.frame.origin.x;
+        CGFloat cardOriginY = cardView.frame.origin.y;
+        CGFloat transformX, transformY;
+        if(abs(cardsContainerViewCenterX - cardOriginX) < 0.0000001) {
+          transformX = 0;
+          transformY = (cardsContainerViewCenterY - cardOriginY) * (1 - scale);
+        } else {
+          CGFloat pathIncline = (cardsContainerViewCenterY - cardOriginY) /
+              (cardsContainerViewCenterX - cardOriginX);
+          CGFloat offset = cardOriginY - pathIncline * cardOriginX;
+          transformX = (cardsContainerViewCenterX - cardOriginX) * (1 - scale);
+          CGFloat newCardOriginY = pathIncline * (cardOriginX + transformX) + offset;
+          transformY = newCardOriginY - cardOriginY;
+        }
+        auto transform = CGAffineTransformTranslate(cardView.transform, transformX, transformY);
+        cardView.transform = transform;
+        pinchGesture.scale = 1;
+      }
     }
   }
 }
@@ -132,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
         int randomAngleInDeg = 180 + arc4random()%180;
         double randomAngleInRad = [LTCardGameViewController degreeToRadConvert:randomAngleInDeg];
         [cardView setFrame:CGRectMake(radius/cos(randomAngleInRad), radius/sin(randomAngleInRad),
-                                      cardView.frame.size.width, cardView.frame.size.height)];
+                                      cardView.bounds.size.width, cardView.bounds.size.height)];
       }
     }];
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
@@ -171,12 +212,12 @@ NS_ASSUME_NONNULL_BEGIN
                       frameOfCellAtRow:(i / weakSelf.cardsDisplayGridHelper.columnCount)
                       inColumn:(i % weakSelf.cardsDisplayGridHelper.columnCount)];
       float sigma = 0.00001;
-      if (abs(cardView.frame.size.width - frame.size.width) > sigma
-          || abs(cardView.frame.size.height - frame.size.height) > sigma
+      if (abs(cardView.bounds.size.width - frame.size.width) > sigma
+          || abs(cardView.bounds.size.height - frame.size.height) > sigma
           || abs(cardView.frame.origin.x - frame.origin.x) > sigma
           || abs(cardView.frame.origin.y - frame.origin.y) > sigma) {
         
-        cardView.frame = frame;
+        [cardView setFrame:frame];
         [cardView setNeedsDisplay];
       }
     }
