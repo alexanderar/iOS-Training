@@ -1,36 +1,22 @@
 // Copyright (c) 2018 Lightricks. All rights reserved.
 // Created by Alex Artyomov.
 
-#import "LTSetCardMatchingGame.h"
+#import "LTSetCardMatcher.h"
 #import "LTSetCardDeck.h"
 #import "LTSetCard.h"
 #import "UIKit/UiKit.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation LTSetCardMatchingGame
-
-#define INITIAL_CARD_COUNT 12
-
-- (instancetype)init {
-  
-  if (self = [super initWithCardCount:INITIAL_CARD_COUNT usingDeck: [[LTSetCardDeck alloc] init]])
-  {
-    return self;
-  }
-  return nil;
-}
-
-- (LTDeck *)createDeck {
-  return [[LTSetCardDeck alloc] init];
-}
+@implementation LTSetCardMatcher
 
 - (int)match:(NSArray *)cards {
   int score = 0;
   if (cards && cards.count > 0) {
-    BOOL matchByShade = [LTSetCardMatchingGame colorMatch:cards];
-    BOOL matchByShape = [LTSetCardMatchingGame shadeMatch:cards];
-    BOOL matchByNumber = [LTSetCardMatchingGame shapeMatch:cards];
-    BOOL matchByColor =  [LTSetCardMatchingGame numberMatch:cards];
+    BOOL matchByShade = [LTSetCardMatcher colorMatch:cards];
+    BOOL matchByShape = [LTSetCardMatcher shadeMatch:cards];
+    BOOL matchByNumber = [LTSetCardMatcher shapeMatch:cards];
+    BOOL matchByColor =  [LTSetCardMatcher numberMatch:cards];
     score =  matchByShade && matchByShape && matchByNumber && matchByColor ? 5 :0;
   }
   return score;
@@ -45,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
     int currentValue = (int)[colorMatches[card.colorHexString] integerValue];
     colorMatches[card.colorHexString] =  [NSNumber numberWithInt:(currentValue + 1)];
   }
-  return [LTSetCardMatchingGame validateMatchOnDictionary:colorMatches];
+  return [LTSetCardMatcher validateMatchOnDictionary:colorMatches];
 }
 
 + (BOOL)shadeMatch:(NSArray *)cards {
@@ -53,12 +39,12 @@ NS_ASSUME_NONNULL_BEGIN
       [NSNumber numberWithInt:LTSetCardShadeUnfilled]:@0,
       [NSNumber numberWithInt:LTSetCardShadeStriped]:@0,
       [NSNumber numberWithInt:LTSetCardShadeSolid]:@0
-      }];
+  }];
   for (LTSetCard *card in cards) {
     int currentValue = (int)[shadeMatches[@((int)card.shade)] integerValue];
     shadeMatches[@((int)card.shade)] =  [NSNumber numberWithInt:(currentValue + 1)];
   }
-  return [LTSetCardMatchingGame validateMatchOnDictionary:shadeMatches];
+  return [LTSetCardMatcher validateMatchOnDictionary:shadeMatches];
 }
 
 + (BOOL)shapeMatch:(NSArray *)cards {
@@ -70,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
     int currentValue = (int)[shapeMatches[card.shape] integerValue];
     shapeMatches[card.shape] =  [NSNumber numberWithInt:(currentValue + 1)];
   }
-  return [LTSetCardMatchingGame validateMatchOnDictionary:shapeMatches];
+  return [LTSetCardMatcher validateMatchOnDictionary:shapeMatches];
 }
 
 + (BOOL)numberMatch:(NSArray *)cards {
@@ -82,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
     int currentValue = (int)[numberMatches[@(card.number)] integerValue];
     numberMatches[@(card.number)] =  [NSNumber numberWithInt:(currentValue + 1)];
   }
-  return [LTSetCardMatchingGame validateMatchOnDictionary:numberMatches];
+  return [LTSetCardMatcher validateMatchOnDictionary:numberMatches];
 }
 
 + (BOOL)validateMatchOnDictionary:(NSDictionary *)dictionary {
@@ -92,10 +78,6 @@ NS_ASSUME_NONNULL_BEGIN
     }
   }
   return YES;
-}
-
-- (NSUInteger)allowedNumberOfChosenCards {
-  return 3;
 }
 
 @end

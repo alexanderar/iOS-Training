@@ -2,7 +2,7 @@
 // Created by Alex Artyomov.
 
 #import "LTSetCardGameViewController.h"
-#import "LTSetCardMatchingGame.h"
+#import "LTSetCardGameConfigProvider.h"
 #import "LTSetCard.h"
 #import "LTSetCardView.h"
 #import "LTGrid.h"
@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation LTSetCardGameViewController
 
 - (LTCardMatchingGame *)createGame {
-  return [[LTSetCardMatchingGame alloc] init];
+  return [[LTCardMatchingGame alloc] initWithConfigurationProvider:
+          [[LTSetCardGameConfigProvider alloc] init]];
 }
 
 - (void)refreshCardsGridAnimated:(BOOL)animated {

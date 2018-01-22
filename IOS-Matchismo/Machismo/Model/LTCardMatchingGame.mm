@@ -5,7 +5,7 @@
 #import "LTDeck.h"
 #import "LTCard.h"
 #import "LTGameIterationResult.h"
-
+#import "LTCardMatcherProtocol.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCardMatchingGame()
@@ -18,9 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSMutableArray <LTCard *> *chosenCards;
 
+@property (readonly, nonatomic) id<LTCardGameConfigProviderProtocol> configProvider;
+
 @property (nonatomic) LTDeck *deckOfCards;
 
 @property (nonatomic) NSUInteger cardCount;
+
+@property (readonly, nonatomic) id<LTCardMatcherProtocol> matcher;
 
 @end
 
@@ -34,12 +38,13 @@ static const int COST_TO_CHOOSE = 1;
 # pragma mark Initialization
 # pragma mark -
 
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck {
+- (instancetype)initWithConfigurationProvider:(id <LTCardGameConfigProviderProtocol>)provider {
   if (self = [super init]) {
-    _deckOfCards = deck;
+    _deckOfCards = [provider createDeck];
     _cards = [[NSMutableArray alloc] init];
     _chosenCards = [[NSMutableArray alloc] init];
-    _cardCount = count;
+    _configProvider = provider;
+    _cardCount = provider.initialCardCount;
     if(![self resetGame]) {
       return nil;
     }
@@ -47,13 +52,30 @@ static const int COST_TO_CHOOSE = 1;
   return self;
 }
 
+- (id<LTCardMatcherProtocol>)matcher {
+  return self.configProvider.matcher;
+}
+
+//- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck {
+//  if (self = [super init]) {
+//    _deckOfCards = deck;
+//    _cards = [[NSMutableArray alloc] init];
+//    _chosenCards = [[NSMutableArray alloc] init];
+//    _cardCount = count;
+//    if(![self resetGame]) {
+//      return nil;
+//    }
+//  }
+//  return self;
+//}
+
 # pragma mark -
 # pragma mark Public API
 # pragma mark -
 
 - (BOOL)resetGame {
   [self.cards removeAllObjects];
-  self.deckOfCards = [self createDeck];
+  self.deckOfCards = [self.configProvider createDeck];
   for (int i = 0; i < self.cardCount; i++) {
     LTCard *card = [self.deckOfCards drawRandomCard];
     if (card) {
@@ -66,9 +88,6 @@ static const int COST_TO_CHOOSE = 1;
   return YES;
 }
 
-- (LTDeck *)createDeck {
-  return nil;
-}
 
 - (NSArray *)addCardsToGame:(NSUInteger)numberOfCards {
   auto newCards = [[NSMutableArray alloc] initWithCapacity:numberOfCards];
@@ -86,7 +105,7 @@ static const int COST_TO_CHOOSE = 1;
 }
 
 - (int)match:(NSArray<LTCard *> *)cards{
-  return 0;
+  return [self.matcher match:cards];
 }
 
 - (LTCard *)cardAtIndex:(NSUInteger)index {
@@ -106,7 +125,7 @@ static const int COST_TO_CHOOSE = 1;
     [self.chosenCards insertObject:chosenCard atIndex:0];
     NSUInteger numberOfOtherChosenCards = [self.chosenCards count];
     
-    if (numberOfOtherChosenCards == self.allowedNumberOfChosenCards) {
+    if (numberOfOtherChosenCards == self.configProvider.allowedNumberOfChosenCards) {
       int matchScore = [self match: self.chosenCards];
       if (matchScore){
         scoreChange = matchScore * MATCH_BONUS;

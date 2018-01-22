@@ -156,7 +156,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Abstract
 - (LTCardMatchingGame *)createGame{
   [NSException raise:@"NSGenericException" format:@"Method not implemented"];
-  return [[LTCardMatchingGame alloc] initWithCardCount:0 usingDeck: [[LTDeck alloc] init]];
+  return nil;
 }
 
 - (void)updateScore{

@@ -1,6 +1,8 @@
 // Copyright (c) 2018 Lightricks. All rights reserved.
 // Created by Alex Artyomov.
 
+#import "LTCardGameConfigProviderProtocol.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class LTCard, LTDeck, LTGameIterationResult;
@@ -11,8 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-/// Initializes new card matching game with \c count number of cards using \c deck.
-- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *) deck
+- (instancetype)initWithConfigurationProvider:(id <LTCardGameConfigProviderProtocol>)provider
     NS_DESIGNATED_INITIALIZER;
 
 /// Returns card at specific \c index.
@@ -25,9 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Chooses a given /c card. Once number of chosen cards reaches an allowed number of chosen cards
 /// that is configured for the game, matchisng logic is triggerd.
 - (void)chooseCard:(LTCard *)card;
-
-/// Creates a deck of cards. Abstract method that should be implemented in derived class.
-- (LTDeck *)createDeck;
 
 /// Returns a matching score for the given \c cards array. Abstract method that should be
 /// implemented in derived class.
@@ -44,9 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Removes the given /c observer from listening on cards property.
 - (void)removeObserverForGameCards:(id)observer ;
-
-/// Number of chosen cards that's when reached should trigger a matching logic.
-@property (readonly, nonatomic) NSUInteger allowedNumberOfChosenCards;
 
 /// Current game score.
 @property (readonly, nonatomic) NSInteger score;

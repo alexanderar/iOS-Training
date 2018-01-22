@@ -3,7 +3,7 @@
 
 #import "LTPlayingCardGameViewController.h"
 #import "LTPlayingCard.h"
-#import "LTPlayCardMatchingGame.h"
+#import "LTPlayingCardGameConfigProvider.h"
 #import "LTPlayingCardView.h"
 #import "LTGrid.h"
 NS_ASSUME_NONNULL_BEGIN
@@ -11,7 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation LTPlayingCardGameViewController
 
 - (LTCardMatchingGame *)createGame{
-  return [[LTPlayCardMatchingGame alloc] init];
+  return [[LTCardMatchingGame alloc] initWithConfigurationProvider:
+          [[LTPlayingCardGameConfigProvider alloc] init]];
 }
 
 @end
