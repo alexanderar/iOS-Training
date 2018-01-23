@@ -88,7 +88,6 @@ static const int COST_TO_CHOOSE = 1;
   return YES;
 }
 
-
 - (NSArray *)addCardsToGame:(NSUInteger)numberOfCards {
   auto newCards = [[NSMutableArray alloc] initWithCapacity:numberOfCards];
   if(!self.deckOfCards.isEmpty) {

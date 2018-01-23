@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Refreshes cards grid. In set game this method removes matched cards from the display grid and
 /// ajusts remaining cards positions. Same ajustment is done when new cards are added to the grid.
-/// If /c callback is provided it is involked when repositioning is completed.
+/// If \c callback is provided it is involked when repositioning is completed.
 - (void)refreshCardsGridAnimated:(BOOL)animated;
 
 ///// Target action that is triggered when user tuches a card.
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// View that displays a deck of cards.
 @property (nonatomic) IBOutlet UIImageView *cardDeckView;
 
-/// Grid helper that is used to allign card views on the screen based on /c cardsContainerView
+/// Grid helper that is used to allign card views on the screen based on \c cardsContainerView
 /// dimentions.
 @property (nonatomic, strong) LTGrid *cardsDisplayGridHelper;
 

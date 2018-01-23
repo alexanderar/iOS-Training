@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LTCardView : UIView
 
 /// Performs all the setup opreations that are needed on view initailzation. This is method will be
-/// called in /c initWithFrame and /c awaikeFromNib methods
+/// called in \c initWithFrame and \c awaikeFromNib methods
 - (void)setup;
 
 /// Card model

@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// chosen cards that is configured for the game, matchisng logic is triggerd.
 - (void)chooseCardAtIndex:(NSUInteger)index;
 
-/// Chooses a given /c card. Once number of chosen cards reaches an allowed number of chosen cards
+/// Chooses a given \c card. Once number of chosen cards reaches an allowed number of chosen cards
 /// that is configured for the game, matchisng logic is triggerd.
 - (void)chooseCard:(LTCard *)card;
 
@@ -31,16 +31,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// implemented in derived class.
 - (int)match:(NSArray *)cards;
 
-/// Adds /c numberOfCards to the current game and returns them in the array.
+/// Adds \c numberOfCards to the current game and returns them in the array.
 - (NSArray *)addCardsToGame:(NSUInteger) numberOfCards;
 
 /// Resets the game by reseting the score to 0, and redialing new set of cards by using new deck.
 - (BOOL)resetGame;
 
-/// Registers the given /c observer to be notified on changes in cards property.
+/// Registers the given \c observer to be notified on changes in cards property.
 - (void)registerObserverForGameCards:(id)observer;
 
-/// Removes the given /c observer from listening on cards property.
+/// Removes the given \c observer from listening on cards property.
 - (void)removeObserverForGameCards:(id)observer ;
 
 /// Current game score.

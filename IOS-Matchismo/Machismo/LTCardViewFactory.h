@@ -9,8 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Factory for creating card views.
 @interface LTCardViewFactory : NSObject
 
-/// Creates /c LTSetCardView or /c LTPlayingCardView based on type of given /c card and sets it's
-/// frame to given /c frame
+/// Creates \c LTSetCardView or \c LTPlayingCardView based on type of given \c card and sets it's
+/// frame to given \c frame
 + (LTCardView *) createViewForCard:(LTCard *)card withFrame:(CGRect)frame;
 
 @end
