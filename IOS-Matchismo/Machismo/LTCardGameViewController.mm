@@ -23,11 +23,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite, nonatomic) LTCardMatchingGame *game;
 
 /// Flag that indicates wearher the view already appeared once or not. This flag is used to ensure
-/// that some logics executes only once inside /c viewDidAppear method.
+/// that some logics executes only once inside \c viewDidAppear method.
 @property (nonatomic) BOOL viewAppeared;
 
 /// Prperty that indicates whether the cards have been gathered into a pile via pinch gesture.
 @property (nonatomic) BOOL cardsGathered;
+
+@property (nonatomic) UIDynamicAnimator *animator;
+
+@property (nonatomic) NSMutableArray<UIAttachmentBehavior *> *attachmentBehaviors;
 
 @end
 
@@ -48,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 # pragma mark -
-# pragma mark - Gestures
+# pragma mark - Gestures handling
 # pragma mark -
 
 - (void)touchCard:(UITapGestureRecognizer *) card {
@@ -60,7 +64,6 @@ NS_ASSUME_NONNULL_BEGIN
     [self refreshCardsGridAnimated:YES];
   } else {
     [self rearangeCardsFromPile];
-
   }
 }
 
@@ -68,10 +71,39 @@ NS_ASSUME_NONNULL_BEGIN
   if (!self.cardsGathered) {
     return;
   }
+  if (panGesture.state == UIGestureRecognizerStateBegan) {
+    [self attachPileOfCardsToAnchorPoint:[panGesture locationInView:self.cardsContainerView]];
+  }
   if (panGesture.state == UIGestureRecognizerStateChanged) {
-    CGPoint translationPoint = [panGesture translationInView:self.cardsContainerView];
-    [self moveCardsPileToPoint:translationPoint];
-    [panGesture setTranslation:CGPointMake(0, 0) inView:self.cardsContainerView];
+    CGPoint anchorPoint = [panGesture locationInView:self.cardsContainerView];
+    [self updateAncorPointForPileOfCards:anchorPoint];
+  }
+  if (panGesture.state == UIGestureRecognizerStateEnded) {
+    [self detachPileOfCardsFromAnimator];
+  }
+}
+
+- (void)detachPileOfCardsFromAnimator {
+  for (UIAttachmentBehavior *behavior in self.attachmentBehaviors) {
+    [self.animator removeBehavior:behavior];
+  }
+  [self.attachmentBehaviors removeAllObjects];
+}
+
+- (void)attachPileOfCardsToAnchorPoint:(CGPoint) anchorPoint {
+  for (LTCardView *cardView in self.cardsContainerView.subviews){
+    auto attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:cardView
+                                                        attachedToAnchor:anchorPoint];
+    
+    attachmentBehavior.length = arc4random() % (uint)(cardView.frame.size.height / 2);
+    [self.attachmentBehaviors addObject:attachmentBehavior];
+    [self.animator addBehavior:attachmentBehavior];
+  }
+}
+
+- (void)updateAncorPointForPileOfCards:(CGPoint)anchorPoint {
+  for (UIAttachmentBehavior *behavior in self.attachmentBehaviors) {
+    behavior.anchorPoint = anchorPoint;
   }
 }
 
@@ -80,18 +112,11 @@ NS_ASSUME_NONNULL_BEGIN
   [self refreshCardsGridAnimated:YES];
 }
 
-
-- (void)moveCardsPileToPoint:(CGPoint)point {
-  for (LTCardView *cardView in self.cardsContainerView.subviews){
-    cardView.center	 = CGPointMake(cardView.center.x + point.x, cardView.center.y + point.y);
-  }
-}
-
 - (void)gatherCardsViaPinchGesture:(UIPinchGestureRecognizer *)pinchGesture {
-  if (pinchGesture.state == UIGestureRecognizerStateBegan || pinchGesture.state
-      == UIGestureRecognizerStateChanged) {
+  if (pinchGesture.state == UIGestureRecognizerStateBegan ||
+      pinchGesture.state == UIGestureRecognizerStateChanged) {
     CGFloat scale = [pinchGesture scale];
-    if(scale < 1) {
+    if(scale < 1 && [self isPinchGestureInsidePileBoundary:pinchGesture]) {
       self.cardsGathered = YES;
       for (LTCardView *cardView in self.cardsContainerView.subviews) {
         CGFloat cardsContainerViewCenterX = self.cardsContainerView.bounds.size.width / 2 -
@@ -112,12 +137,42 @@ NS_ASSUME_NONNULL_BEGIN
           CGFloat newCardOriginY = pathIncline * (cardOriginX + transformX) + offset;
           transformY = newCardOriginY - cardOriginY;
         }
-        auto transform = CGAffineTransformTranslate(cardView.transform, transformX, transformY);
-        cardView.transform = transform;
+        cardView.frame = CGRectMake(cardOriginX + transformX, cardOriginY + transformY,
+                                    cardView.frame.size.width, cardView.frame.size.height);
         pinchGesture.scale = 1;
       }
     }
   }
+}
+
+- (BOOL)isPinchGestureInsidePileBoundary:(UIPinchGestureRecognizer *)pinchGesture  {
+  CGPoint gestureLocation = [pinchGesture locationInView:self.cardsContainerView];
+  CGRect pileBoundary = [self getPileOfCardsBoundary];
+  return pileBoundary.origin.x <= gestureLocation.x && pileBoundary.origin.y <= gestureLocation.y
+  && pileBoundary.origin.x + pileBoundary.size.width >= gestureLocation.x && pileBoundary.origin.y +
+  pileBoundary.size.height >= gestureLocation.y;
+}
+
+- (CGRect)getPileOfCardsBoundary {
+  CGFloat minX = FLT_MAX, maxX = 0, minY = FLT_MAX, maxY = 0;
+  for (LTCardView *cardView in self.cardsContainerView.subviews) {
+    CGPoint origin = cardView.frame.origin;
+    if(origin.x < minX) {
+      minX = origin.x;
+    }
+    if(origin.y < minY) {
+      minY = origin.y;
+    }
+    if(origin.x + cardView.frame.size.width > maxX)
+    {
+      maxX = origin.x + cardView.frame.size.width;
+    }
+    if(origin.y + cardView.frame.size.height > maxY)
+    {
+      maxY = cardView.frame.size.height + maxY;
+    }
+  }
+  return CGRectMake(minX, minY, maxX-minX, maxY-minY);
 }
 
 # pragma mark -
@@ -126,6 +181,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)viewDidLoad {
   [self.cardDeckView setImage:[UIImage imageNamed:@"cardback"]];
+  _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.cardsContainerView];
+  _attachmentBehaviors = [[NSMutableArray alloc] init];
   [self.cardsContainerView addGestureRecognizer:[[UIPinchGestureRecognizer alloc]
       initWithTarget:self action:@selector(gatherCardsViaPinchGesture:)]];
   auto panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self
@@ -182,18 +239,21 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)dialCard:(LTCard *)card withAnimationDelay:(float)delay {
-  NSUInteger index = [self.cardsContainerView.subviews count];
   CGFloat originX = self.cardDeckView.frame.origin.x + self.cardDeckView.frame.size.width / 2;
   CGFloat originY = self.cardDeckView.frame.origin.y;
   UIView *cardView = [LTCardViewFactory createViewForCard:card
                                                 withFrame: CGRectMake(originX, originY, 0, 0)];
   [cardView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self
       action:@selector(touchCard:)]];
+  [self animateCardDialForView:cardView withAnimationDelay:delay];
   [self.cardsContainerView addSubview:cardView];
+}
+
+- (void)animateCardDialForView:(UIView *)cardView withAnimationDelay:(float)delay{
+  NSUInteger index = [self.cardsContainerView.subviews count];
   CGRect frame = [self.cardsDisplayGridHelper
                   frameOfCellAtRow:(index / self.cardsDisplayGridHelper.columnCount)
                   inColumn:(index % self.cardsDisplayGridHelper.columnCount)];
-  
   UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:0.5
       curve:UIViewAnimationCurveEaseInOut animations:^{
         cardView.frame = frame;
@@ -215,8 +275,8 @@ NS_ASSUME_NONNULL_BEGIN
           [cardView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
           int randomAngleInDeg = 180 + arc4random()%180;
           double randomAngleInRad = [LTCardGameViewController degreeToRadConvert:randomAngleInDeg];
-          [cardView setFrame:CGRectMake(radius/cos(randomAngleInRad), radius/sin(randomAngleInRad),
-                                        cardView.bounds.size.width, cardView.bounds.size.height)];
+          [cardView setFrame:CGRectMake(radius / cos(randomAngleInRad),
+                                        radius / sin(randomAngleInRad), cardView.bounds.size.width, cardView.bounds.size.height)];
         }
       }];
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
