@@ -2,10 +2,12 @@
 // Created by Alex Artyomov.
 
 #import "LTCardMatchingGame.h"
+#import "LTCardMatcherProtocol.h"
+#import "LTCardGameConfigProviderProtocol.h"
 #import "LTDeck.h"
 #import "LTCard.h"
 #import "LTGameIterationResult.h"
-#import "LTCardMatcherProtocol.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCardMatchingGame()
@@ -55,19 +57,6 @@ static const int COST_TO_CHOOSE = 1;
 - (id<LTCardMatcherProtocol>)matcher {
   return self.configProvider.matcher;
 }
-
-//- (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(LTDeck *)deck {
-//  if (self = [super init]) {
-//    _deckOfCards = deck;
-//    _cards = [[NSMutableArray alloc] init];
-//    _chosenCards = [[NSMutableArray alloc] init];
-//    _cardCount = count;
-//    if(![self resetGame]) {
-//      return nil;
-//    }
-//  }
-//  return self;
-//}
 
 # pragma mark -
 # pragma mark Public API

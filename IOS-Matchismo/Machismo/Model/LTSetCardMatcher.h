@@ -2,6 +2,7 @@
 // Created by Alex Artyomov.
 
 #import "LTCardMatcherProtocol.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTSetCardMatcher : NSObject <LTCardMatcherProtocol>

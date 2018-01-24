@@ -6,8 +6,10 @@
 //  Copyright © 2018 Lightricks. All rights reserved.
 //
 
-#import "LTCardMatcherProtocol.h"
 #import "LTDeck.h"
+
+@protocol LTCardMatcherProtocol;
+
 /// Protocol that defines functionality of configuration provider for any card mtching game.
 @protocol LTCardGameConfigProviderProtocol <NSObject>
 
